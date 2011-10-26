@@ -7,8 +7,7 @@
 			$pageContent = $this->getContent($id);
 			$pageHeadings = $this->getHeadings($id);
 		
-
-			foreach($i=0, $i<count($pageContent), $i++) {
+			for ($i=0; $i<count($pageContent); $i++) {
 
 				$pageArray[$i]['heading'] = $pageContent[$i];
 				$pageArray[$i]['content'] = $pageHeadings[$i];

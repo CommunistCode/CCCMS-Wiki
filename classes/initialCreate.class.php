@@ -2,7 +2,7 @@
 
 	require_once($fullPath."/classes/dbConn.class.php");
 	
-	class initialInstallMantisWiki {
+	class initialInstallWiki {
 
 		public function createTables() {
 
@@ -39,7 +39,7 @@
 
 			if ($db->mysqli->query($query)) {
 
-				echo("wiki_pageTypes table created");
+				echo("wiki_pageTypes table created<br />");
 
 			} else {
 
@@ -94,7 +94,7 @@
 
 			$db = new dbConn();
 
-			if ($db->checkExists("version","module","mantisWiki")) {
+			if ($db->checkExists("version","module","wiki")) {
 
 				echo("version already populated<br />");
 
@@ -109,7 +109,7 @@
 						version,
 						theme
 					) values (
-						'mantisWiki',
+						'wiki',
 						'1.0.0',
 						'default'
 					); ";
@@ -122,9 +122,9 @@
 
 			}
 			
-			if ($db->checkExists("adminContent","name","Blog Module")) {
+			if ($db->checkExists("adminContent","name","Wiki Module")) {
 
-				echo("adminContent already populated with the Blog Module <br />");
+				echo("adminContent already populated with the Wiki Module <br />");
 
 			}
 
@@ -137,8 +137,8 @@
 							link,
 							category
 						) values (
-							'Mantis Wiki Module',
-							'mantisWiki/admin/mantisWikiModule.php',
+							'Wiki Module',
+							'wiki/admin/wikiModule.php',
 							'main'
 						);";
 
@@ -150,9 +150,9 @@
 
 			}
 
-			if ($db->checkExists("dContent","title","Blog")) {
+			if ($db->checkExists("dContent","title","Wiki")) {
 
-				echo("dContent already populated with blog link <br />");
+				echo("dContent already populated with wiki link <br />");
 
 			}
 
@@ -165,9 +165,9 @@
 						linkName,
 						directLink
 					) values (
-						'Mantis Wiki',
-						'Mantis Wiki',
-						'mantisWiki/index.php'
+						'Wiki',
+						'Wiki',
+						'wiki/index.php'
 					);";
 
 				if ($db->mysqli->query($query)) {

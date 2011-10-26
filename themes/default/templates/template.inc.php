@@ -3,43 +3,57 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title><?php echo($title); ?> : Blog</title>
+		<title><?php echo($title." : ".$pageContent['title']); ?></title>
 		<link href="../themes/<?php echo($pageTools->getTheme("base")); ?>/stylesheets/base.css" rel="stylesheet" type="text/css" />
-		<link href="themes/<?php echo($pageTools->getTheme("blog")); ?>/stylesheets/blogStyle.css" rel="stylesheet" type"text/css" />
+		<link href="themes/<?php echo($pageTools->getTheme("wiki")); ?>/stylesheets/wikiStyle.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 		<div id="mainContainer">
 			<div id="title">
 				<?php 
 					require_once($fullPath."/themes/".$pageTools->getTheme("base")."/templates/title.inc.php"); 
-			?>
+				?>
 			</div>
 			<div id='navBar'>
 				<?php 
 					require_once($fullPath."/themes/".$pageTools->getTheme("base")."/templates/links.inc.php"); 
 				?>
 			</div>
-
 			<div id='bodyContainer'>
 
-				<div class='blogLinks'>
-
+				<div class="wikiLinks">
 					<?php
-						require_once($fullPath."/blog/includes/blogLinks.inc.php");
+						require_once("includes/wikiLinks.inc.php");
 					?>
-
 				</div>
-	
-				<div class="blogBody">
+			
+				<div class="wikiBody">
 		
-					<h1>Blog Posts</h1>	
+			  <?php
 
-					<?php 
-	
-						echo($content);					
+					echo("<h1>".$heading."</h1>");
 
-					?>
+					if (isset($help)) {
+						
+						echo("<div class='help'>".$help."</div>");
 
+					}
+
+					if (isset($content)) {
+
+						echo($content);
+
+					}
+
+          if (isset($include)) {
+
+						include($include);
+
+					}
+
+        ?>
+
+				
 				</div>
 
 			</div>
@@ -52,3 +66,6 @@
 		</div>
 	</body>
 </html>
+
+
+
