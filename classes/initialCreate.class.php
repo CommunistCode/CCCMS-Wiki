@@ -12,7 +12,7 @@
 
 				CREATE TABLE wiki_pages (
 					wikiPageID INT NOT NULL AUTO_INCREMENT,
-					wikiPageTypeID TEXT,
+					wikiPageTypeID INT,
 					PRIMARY KEY(wikiPageID)
 				); ";
 
@@ -51,8 +51,8 @@
 
 				CREATE TABLE wiki_pageTypeDefinitions (
 						wikiPageTypeDefinitionID INT NOT NULL AUTO_INCREMENT,
-						order INT,
 						wikiPageTypeID INT,
+						headingOrder INT,
 						heading TEXT,
 						description TEXT,
 						contentType TEXT,
@@ -61,7 +61,7 @@
 
 			if ($db->mysqli->query($query)) {
 
-				echo("wiki_pageTypeDefinitions table created");
+				echo("wiki_pageTypeDefinitions table created <br />");
 
 			} else {
 
@@ -72,7 +72,7 @@
 			$query = "
 
 				CREATE TABLE wiki_pageContents (
-						wikiPageTypeDefinitionID,
+						wikiPageTypeDefinitionID INT,
 						wikiPageID INT,
 						content TEXT,
 						PRIMARY KEY(wikiPageID,wikiPageTypeDefinitionID)
