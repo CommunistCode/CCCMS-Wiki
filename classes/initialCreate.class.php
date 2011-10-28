@@ -1,7 +1,8 @@
 <?php
 
 	require_once($fullPath."/classes/dbConn.class.php");
-	
+	require_once($fullPath."/admin/classes/adminDBTools.class.php");
+
 	class initialInstallWiki {
 
 		public function createTables() {
@@ -12,7 +13,7 @@
 
 				CREATE TABLE wiki_pages (
 					wikiPageID INT NOT NULL AUTO_INCREMENT,
-					wikiPageTypeID INT,
+					wikiTemplateID INT,
 					PRIMARY KEY(wikiPageID)
 				); ";
 
@@ -30,11 +31,11 @@
 
 			$query = "
 
-				CREATE TABLE wiki_pageTypes (
-						wikiPageTypeID INT NOT NULL AUTO_INCREMENT,
+				CREATE TABLE wiki_templates (
+						wikiTemplateID INT NOT NULL AUTO_INCREMENT,
 						name TEXT,
 						description TEXT,
-						PRIMARY KEY(wikiPageTypeID)
+						PRIMARY KEY(wikiTemplateID)
 					); ";
 
 			if ($db->mysqli->query($query)) {
@@ -49,14 +50,14 @@
 
 			$query = "
 
-				CREATE TABLE wiki_pageTypeDefinitions (
-						wikiPageTypeDefinitionID INT NOT NULL AUTO_INCREMENT,
-						wikiPageTypeID INT,
+				CREATE TABLE wiki_templateDefinitions (
+						wikiTemplateDefinitionID INT NOT NULL AUTO_INCREMENT,
+						wikiTemplateID INT,
 						headingOrder INT,
 						heading TEXT,
 						description TEXT,
-						contentType TEXT,
-						PRIMARY KEY(wikiPageTypeDefinitionID)
+						dataType TEXT,
+						PRIMARY KEY(wikiTemplateDefinitionID)
 					); ";
 
 			if ($db->mysqli->query($query)) {
@@ -72,10 +73,11 @@
 			$query = "
 
 				CREATE TABLE wiki_pageContents (
-						wikiPageTypeDefinitionID INT,
+						wikiTemplateDefinitionID INT,
 						wikiPageID INT,
+						wikiTemplateID INT,
 						content TEXT,
-						PRIMARY KEY(wikiPageID,wikiPageTypeDefinitionID)
+						PRIMARY KEY(wikiPageID,wikiTemplateID,wikiTemplateDefinitionID)
 					); ";
 
 			if ($db->mysqli->query($query)) {
@@ -93,7 +95,8 @@
 		public function populateTables() {
 
 			$db = new dbConn();
-
+			$adminDBTools = new adminDBTools();
+		
 			if ($db->checkExists("version","module","wiki")) {
 
 				echo("version already populated<br />");
@@ -121,34 +124,10 @@
 				}
 
 			}
-			
-			if ($db->checkExists("adminContent","name","Wiki Module")) {
-
-				echo("adminContent already populated with the Wiki Module <br />");
-
-			}
-
-			else {
-
-				$query = "
-
-					INSERT INTO adminContent (
-							name,
-							link,
-							category
-						) values (
-							'Wiki Module',
-							'wiki/admin/wikiModule.php',
-							'main'
-						);";
-
-				if ($db->mysqli->query($query)) {
-
-					echo("adminContent populated <br />");
-
-				}
-
-			}
+		
+			$adminDBTools->newContent("Wiki Module","wiki/admin/wikiModules.php","main");
+			$adminDBTools->newContent("Create Template","wiki/admin/createTemplate.php","Wiki Module");
+			$adminDBTools->newContent("Delete Template","wiki/admin/deleteTemplate.php","Wiki Module");
 
 			if ($db->checkExists("dContent","title","Wiki")) {
 
