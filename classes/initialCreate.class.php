@@ -2,32 +2,48 @@
 
 	require_once($fullPath."/classes/dbConn.class.php");
 	require_once($fullPath."/admin/classes/adminDBTools.class.php");
+	require_once($fullPath."/classes/dbTools.class.php");
 
 	class initialInstallWiki {
 
 		public function createTables() {
 
 			$db = new dbConn();
+			$dbTools = new dbTools();
 
-			$query = "
+			$i=0;
 
-				CREATE TABLE wiki_pages (
-					wikiPageID INT NOT NULL AUTO_INCREMENT,
-					wikiTemplateID INT,
-					PRIMARY KEY(wikiPageID)
-				); ";
+			$tableName = "wiki_category";
 
-			if ($db->mysqli->query($query)) {
+			$tableDefinition[$i]['name'] = "wikiCategoryID";
+			$tableDefinition[$i]['definition'] = "INT NOT NULL AUTO_INCREMENT";
 
-				echo("wiki table created<br />");
+			$tableDefinition[++$i]['name'] = "parentCategoryID";
+			$tableDefinition[$i]['definition'] = "INT";
 
-			}
+			$tableDefinition[++$i]['name'] = "name";
+			$tableDefinition[$i]['definition'] = "TEXT";
+			
+			$primaryKey = "wikiCategoryID";
+			
+			$dbTools->newTable($tableName,$tableDefinition,$primaryKey);
 
-			else {
+			$i=0;
 
-				echo($db->mysqli->error."<br />");
+			$tableName = "wiki_pages";
 
-			}
+			$tableDefinition[$i]['name'] = "wikiPageID";
+			$tableDefinition[$i]['definition'] = "INT NOT NULL AUTO_INCREMENT";
+
+			$tableDefinition[++$i]['name'] = "wikiTemplateID";
+			$tableDefinition[$i]['definition'] = "INT";
+
+			$tableDefinition[++$i]['name'] = "wikiCategoryID";
+			$tableDefinition[$i]['definition'] = "INT";
+
+			$primaryKey = "wikiPageID";
+
+			$dbTools->newTable($tableName,$tableDefinition,$primaryKey);
 
 			$query = "
 
