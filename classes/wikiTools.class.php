@@ -2,6 +2,92 @@
 
 	class wikiTools {
 
+		public function getCategoryPages($id) {
+
+			$db = new dbConn();
+
+			$query = "SELECT DISTINCT 
+									wp.title,
+									wp.wikiPageID
+								FROM
+									wiki_pages wp
+								LEFT JOIN
+									wiki_pageContents wpc
+								ON
+									wp.wikiPageID = wpc.wikiPageID
+								WHERE
+									wp.wikiCategoryID = ".$id."
+							 ";
+
+			$result = $db->mysqli->query($query);
+
+			if ($result->num_rows != 0) {
+
+				$i = 0;
+
+				while ($row=$result->fetch_assoc()) {
+
+					$wikiPageArray[$i]['wikiPageID'] = $row['wikiPageID'];
+					$wikiPageArray[$i]['title'] = $row['title'];
+
+					$i++;
+
+				}
+	
+				return $wikiPageArray;
+
+			}
+
+		}
+		
+		public function getCategoryParentID($id) {
+
+			$db = new dbConn();
+
+			$result = $db->selectWhere("parentCategoryID","wiki_categories","wikiCategoryID=".$id);
+
+			$categoryArray = $result->fetch_assoc();
+
+			return $categoryArray['parentCategoryID'];
+
+		}
+
+		public function getCategoryName($id) {
+
+			$db = new dbConn();
+
+			$result = $db->selectWhere("name","wiki_categories","wikiCategoryID=".$id);
+
+			$categoryArray = $result->fetch_assoc();
+
+			return $categoryArray['name'];
+		}
+
+		public function getCategoryList($parentCategoryID) {
+
+			$db = new dbConn();
+
+			$result = $db->selectWhere("name,wikiCategoryID","wiki_categories","parentCategoryID=".$parentCategoryID);
+
+			$i = 0;
+
+			while ($row = $result->fetch_assoc()) {
+				
+				$categoryArray[$i]['name'] = $row['name'];
+				$categoryArray[$i]['wikiCategoryID'] = $row['wikiCategoryID'];
+
+				$i++;
+
+			}
+
+			if (isset($categoryArray)) {
+	
+				return $categoryArray;
+
+			}
+
+		}
+
 		public function sortCategories($sortedArray, $currentCategory = 0, $level = 0) {
 
       $db = new dbConn();
