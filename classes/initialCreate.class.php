@@ -13,7 +13,7 @@
 
 			$i=0;
 
-			$tableName = "wiki_category";
+			$tableName = "wiki_categories";
 
 			$tableDefinition[$i]['name'] = "wikiCategoryID";
 			$tableDefinition[$i]['definition'] = "INT NOT NULL AUTO_INCREMENT";

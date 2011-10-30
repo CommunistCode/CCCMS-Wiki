@@ -4,18 +4,20 @@
 	require_once($fullPath."/admin/includes/global.inc.php");
 	require_once($fullPath."/admin/includes/checkLogin.inc.php");
 	require_once("classes/wikiAdminTools.class.php");
+	require_once($fullPath."/wiki/classes/wikiTools.class.php");
 
 	$wikiAdminTools = new wikiAdminTools();
+	$wikiTools = new wikiTools();
 
 	if (isset($_POST['addCategory'])) {
 
-		//Add new category
+		$wikiAdminTools->addCategory($_POST['name'],$_POST['parentCategory']);
 
 	}
 
 	if (isset($_POST['deleteCategory'])) {
 
-		//Delete category
+		$wikiAdminTools->deleteCategory($_POST['categoryID']);
 
 	}
 
@@ -49,24 +51,35 @@
 				
 				<br />
 				
-				<form action='createTemplate.php' method='post'>
+				<form action='manageCategories.php' method='post'>
 
 					<label for="name">Category Name:</label>
 					<input type='text' name='name' />	
 
+					<label for="parentCategory">Parent Category</label>
+					<select name='parentCategory'>
+
+					<option value='0'>Main Category</option>
+
+						<?php
+
+							$wikiTools->renderCategorySelectOptions();		
+
+						?>
+
+					</select>
 					<input type='submit' value='Add Category' name='addCategory' />
 
 				</form>
 
-				<form>
+				<form action='manageCategories.php' method='post'>
 
-					<label for="name">Category Name:</label>
-					
-					<select name='name'>
+					<label for="categoryID">Category Name:</label>
+					<select name='categoryID'>
 
 						<?php
 
-							//Get all categories
+							$wikiTools->renderCategorySelectOptions();
 
 						?>
 
