@@ -1,8 +1,8 @@
 <?php
 
-	$wikiPage = new wikiPage($_GET['wikiPageID']);
-
 	$wikiPageArray = $wikiPage->getWikiPageArray();
+	
+	$heading = "Wiki Page - ".$wikiPage->getTitle();
 
 	$wikiPage = "<table>";
 

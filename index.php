@@ -8,7 +8,6 @@
 	$wikiTools = new wikiTools();
 
 	$heading = "Wiki";
-	$content = "Welcome to the Wiki";
 	$include = "includes/showCategoryPages.inc.php";
 
 	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");

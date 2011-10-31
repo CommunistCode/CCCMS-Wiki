@@ -32,6 +32,8 @@
 			  <?php
 
 					echo("<h1>".$heading."</h1>");
+					
+					require_once("includes/wikiCategoryBar.inc.php");
 
 					if (isset($help)) {
 						

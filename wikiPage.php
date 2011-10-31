@@ -7,10 +7,11 @@
 	require_once($fullPath."/includes/global.inc.php");
 
 	$wikiTools = new wikiTools();
+	$wikiPage = new wikiPage($_GET['wikiPageID']);
 
-	$heading = "Wiki Page";
+	$heading = $wikiPage->getTitle();
 	$include = "includes/wikiPage.inc.php";
-
+	
 	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");
 
 ?>

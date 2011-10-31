@@ -1,6 +1,6 @@
 <?php
 
-	echo("<br /><br />");
+	echo("Pages in current category:<br /><br />");
 
 	$wikiTools = new wikiTools();
 
@@ -20,7 +20,7 @@
 
 		foreach($pageArray as $page) {
 
-			echo("<a href='wikiPage.php?wikiPageID=".$page['wikiPageID']."'>".$page['title']."</a>");
+			echo("<a href='wikiPage.php?wikiPageID=".$page['wikiPageID']."&categoryID=".$categoryID."'>".$page['title']."</a>");
 
 			echo("<br />");
 

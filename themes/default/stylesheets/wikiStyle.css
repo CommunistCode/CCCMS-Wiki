@@ -6,6 +6,18 @@
 	font-size: 14px;
 }
 
+.wikiCategoryBar {
+	border-bottom: 2px solid green;
+	margin: 0px 0px 10px 0px;
+}
+
+.wikiCategoryBar h3 {
+	font-size: 12px;
+	margin: -13px 0px 2px 0px;
+	padding: 0px;
+	font-weight: normal;
+}
+
 .wikiLinks {
   float: left;
   padding: 10px 10px 10px 10px;

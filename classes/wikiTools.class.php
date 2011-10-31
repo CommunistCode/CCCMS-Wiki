@@ -46,9 +46,17 @@
 
 			$result = $db->selectWhere("parentCategoryID","wiki_categories","wikiCategoryID=".$id);
 
-			$categoryArray = $result->fetch_assoc();
+			if ($result->num_rows>0) {
+				
+				$categoryArray = $result->fetch_assoc();
 
-			return $categoryArray['parentCategoryID'];
+				return $categoryArray['parentCategoryID'];
+
+			} else {
+
+				return 0;
+
+			}
 
 		}
 
@@ -58,9 +66,14 @@
 
 			$result = $db->selectWhere("name","wiki_categories","wikiCategoryID=".$id);
 
-			$categoryArray = $result->fetch_assoc();
+			if ($result->num_rows>0) {
+				
+				$categoryArray = $result->fetch_assoc();
 
-			return $categoryArray['name'];
+				return $categoryArray['name'];
+
+			}
+
 		}
 
 		public function getCategoryList($parentCategoryID) {
