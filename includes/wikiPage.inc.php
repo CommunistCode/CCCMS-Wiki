@@ -16,7 +16,19 @@
 		$wikiContent .= "</form>";
 
 		$wikiContent .= "</tr>";
-		$wikiContent .= "<tr><td class='text' colspan=2 >".$contentPiece['content']."</td></tr>";
+		$wikiContent .= "<tr><td class='text' colspan=2 >";
+		
+		if ($contentPiece['content'] != "") {
+
+			$wikiContent .= $contentPiece['content'];
+			
+		} else {
+
+			$wikiContent .= "<em>No information added yet!</em>";
+
+		}
+		$wikiContent .= "</td></tr>";
+		
 		$wikiContent .= "</table>";
 		
 		echo($wikiContent);

@@ -78,3 +78,7 @@
 	padding: 10px 5px 5px 5px;
 	font-size: 13px;
 }
+
+.wikiContent .text em {
+	color: grey;
+}
