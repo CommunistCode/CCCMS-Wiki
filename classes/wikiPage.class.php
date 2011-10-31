@@ -4,20 +4,25 @@
 
 	class wikiPage {
 
-		var $wikiPageTitle;
 		var $wikiPageArray;
+		var $id;
+		var $title;
+		var $categoryID;
 
 		public function wikiPage($id) {
 
+			$this->id = $id;
+
 			$db = new dbConn();
 
-			$query = "SELECT wikiTemplateID,title from wiki_pages WHERE wikiPageID='".$id."'";
+			$query = "SELECT wikiCategoryID, wikiTemplateID,title from wiki_pages WHERE wikiPageID='".$id."'";
 
 			$result = $db->mysqli->query($query);
 			$data = $result->fetch_assoc();
 
 			$templateID = $data['wikiTemplateID'];
-			$this->wikiPageTitle = $data['title'];
+			$this->title = $data['title'];
+			$this->categoryID = $data['wikiCategoryID'];
 
 			$query = "SELECT 
 									wpc.content,
@@ -72,7 +77,13 @@
 
 		public function getTitle() {
 
-			return $this->wikiPageTitle;
+			return $this->title;
+
+		}
+
+		public function getCategoryID() {
+
+			return $this->categoryID;
 
 		}
 		

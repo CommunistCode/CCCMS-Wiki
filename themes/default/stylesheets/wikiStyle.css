@@ -41,3 +41,40 @@
 	padding: 0px;
 	border: 0px;
 }
+
+.wikiContent {
+	width: 100%;
+	margin: 0px 0px 5px 0px;
+	padding: 0px;
+	border: 0px;
+	background: #FFFFFF;
+	border: 1px solid grey;
+}
+
+.wikiContent .heading {
+	margin: 0px;
+	padding: 5px;
+	background: #EBEBEB;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.wikiContent .heading h3 {
+	float: left;
+	margin: 3px 0px 0px 0px;
+	padding: 0px;
+	font-size: 13px;
+}
+
+.wikiContent .heading input {
+	float: right;
+	width: 50px;
+	padding: 2px 5px 1px 0px;
+}
+
+.wikiContent .text {
+	border-top: 1px solid grey;
+	margin: 0px 0px 0px 0px;
+	padding: 10px 5px 5px 5px;
+	font-size: 13px;
+}

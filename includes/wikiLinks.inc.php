@@ -6,6 +6,10 @@
 
 		$categoryID = $_GET['categoryID'];
 
+	} else if (isset($_GET['wikiPageID'])) {
+
+		$categoryID = $wikiPage->getCategoryID();
+
 	} else {
 
 		$categoryID = 0;

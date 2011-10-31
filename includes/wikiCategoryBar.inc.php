@@ -1,8 +1,20 @@
 <?php
 
-	$categoryID = $_GET['categoryID'];
+	if (isset($_GET['categoryID'])) {
+
+		$categoryID = $_GET['categoryID'];
+
+	} else if (isset($_GET['wikiPageID'])) {
+
+		$categoryID = $wikiPage->getCategoryID();
+
+	} else {
+
+		$categoryID = 0;
+
+	}
 	
-	$categoryBarArray[0] = $_GET['categoryID'];
+	$categoryBarArray[0] = $categoryID;
 
 	$i = 0;
 

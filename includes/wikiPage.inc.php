@@ -4,19 +4,23 @@
 	
 	$heading = "Wiki Page - ".$wikiPage->getTitle();
 
-	$wikiPage = "<table>";
-
 	foreach ($wikiPageArray as $contentPiece) {
 
-		$wikiPage .= "<tr>";
-		$wikiPage .= "<th>".$contentPiece['heading']."</th>";
-		$wikiPage .= "<td>".$contentPiece['content']."</td>";
-		$wikiPage .= "</tr>";
+		$wikiContent  = "<table class='wikiContent'>";
+		$wikiContent .= "<tr>";
+		
+		$wikiContent .= "<td class='heading'><h3>".$contentPiece['heading']."</h3>";
+
+		$wikiContent .= "<form method='post' action='wikiPage.php?wikiPageID=".$_GET['wikiPageID']."'>";
+		$wikiContent .= "<input type='submit' value='Edit'></td>";
+		$wikiContent .= "</form>";
+
+		$wikiContent .= "</tr>";
+		$wikiContent .= "<tr><td class='text' colspan=2 >".$contentPiece['content']."</td></tr>";
+		$wikiContent .= "</table>";
+		
+		echo($wikiContent);
 
 	}
-
-	$wikiPage .= "</table>";
-
-	echo($wikiPage);
 
 ?>
