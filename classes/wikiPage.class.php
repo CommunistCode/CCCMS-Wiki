@@ -40,18 +40,18 @@
 								AND
 									wpc.wikiPageID = ".$id."
 								WHERE
-									wtd.wikiTemplateID = ".$this->templateID." 
+									wtd.wikiTemplateID = ".$this->templateID."
+								AND
+									wpc.isCurrent = 1 
 								ORDER BY
 									headingOrder
-								ASC,
-									date
-								DESC
+								ASC
 								";
 
 			$result = $db->mysqli->query($query) OR die($db->mysqli->error);
 
 			$i = 0;
-
+			
 			while ($row = $result->fetch_assoc()) {
 
 				$wikiPageArray[$i]['heading'] = $row['heading'];
@@ -71,7 +71,7 @@
 				$i++;
 
 			}
-
+			
 			$this->wikiPageArray = $wikiPageArray;
 			
 		}

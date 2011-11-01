@@ -116,6 +116,9 @@
 
 			$tableDefinition[++$i]['name'] = "isCurrent";
 			$tableDefinition[$i]['definition'] = "TINYINT";
+
+			$tableDefinition[++$i]['name'] = "memberID";
+			$tableDefinition[$i]['definition'] = "INT";
 	
 			$primaryKey = "wikiPageID,wikiTemplateID,wikiTemplateDefinitionID,date";
 

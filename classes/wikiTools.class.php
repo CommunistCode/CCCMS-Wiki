@@ -159,19 +159,34 @@
 
 			$db = new dbConn();
 
-			$db->insert("wiki_pageContents",
+			$time = time();
+			$member = unserialize($_SESSION['member']);
+
+			if ($db->insert("wiki_pageContents",
 									"wikiTemplateDefinitionID,
 									 wikiPageID,
 									 wikiTemplateID,
 									 content,
-									 date",
+									 date,
+									 isCurrent,
+									 memberID",
 									 "'".$definitionID."',
 									 '".$pageID."',
 									 '".$templateID."',
 									 '".$contents."',
-									 ".time());
+									 ".$time.",
+									 1,
+									 ".$member->getID()."")) {
 
-			echo($db->mysqli->error);
+
+				$db->update("wiki_pageContents","isCurrent=0","isCurrent=1 AND wikiPageID=".$pageID." AND wikiTemplateDefinitionID=".$definitionID." AND date != ".$time);
+
+			} else {
+
+				 echo($db->mysqli->error);
+
+			}
+
 
 		}
 		
