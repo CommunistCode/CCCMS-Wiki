@@ -8,6 +8,7 @@
 		var $id;
 		var $title;
 		var $categoryID;
+		var $templateID;
 
 		public function wikiPage($id) {
 
@@ -20,13 +21,14 @@
 			$result = $db->mysqli->query($query);
 			$data = $result->fetch_assoc();
 
-			$templateID = $data['wikiTemplateID'];
+			$this->templateID = $data['wikiTemplateID'];
 			$this->title = $data['title'];
 			$this->categoryID = $data['wikiCategoryID'];
 
 			$query = "SELECT 
 									wpc.content,
-									wtd.heading
+									wtd.heading,
+									wtd.wikiTemplateDefinitionID
 								FROM 
 									wiki_templateDefinitions wtd
 								LEFT JOIN
@@ -38,10 +40,13 @@
 								AND
 									wpc.wikiPageID = ".$id."
 								WHERE
-									wtd.wikiTemplateID = ".$templateID." 
+									wtd.wikiTemplateID = ".$this->templateID." 
 								ORDER BY
 									headingOrder
-								ASC";
+								ASC,
+									date
+								DESC
+								";
 
 			$result = $db->mysqli->query($query) OR die($db->mysqli->error);
 
@@ -50,6 +55,8 @@
 			while ($row = $result->fetch_assoc()) {
 
 				$wikiPageArray[$i]['heading'] = $row['heading'];
+
+				$wikiPageArray[$i]['definitionID'] = $row['wikiTemplateDefinitionID'];
 
 				if (isset($row['content'])) {
 
@@ -84,6 +91,18 @@
 		public function getCategoryID() {
 
 			return $this->categoryID;
+
+		}
+
+		public function getID() {
+
+			return $this->id;
+
+		}
+
+		public function getTemplateID() {
+
+			return $this->templateID;
 
 		}
 		

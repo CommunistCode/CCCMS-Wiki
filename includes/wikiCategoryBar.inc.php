@@ -66,6 +66,12 @@
 
 			}
 
+			if (isset($_GET['wikiPageID'])) {
+
+				echo(" > <strong>Viewing Page</strong>");
+
+			}
+
 		?>
 
 	</h3>

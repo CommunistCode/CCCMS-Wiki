@@ -154,6 +154,26 @@
 
 			}
 		}
+
+		public function insertContent($pageID,$templateID,$definitionID,$contents) {
+
+			$db = new dbConn();
+
+			$db->insert("wiki_pageContents",
+									"wikiTemplateDefinitionID,
+									 wikiPageID,
+									 wikiTemplateID,
+									 content,
+									 date",
+									 "'".$definitionID."',
+									 '".$pageID."',
+									 '".$templateID."',
+									 '".$contents."',
+									 ".time());
+
+			echo($db->mysqli->error);
+
+		}
 		
 	}
 

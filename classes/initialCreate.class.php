@@ -27,6 +27,7 @@
 			$primaryKey = "wikiCategoryID";
 			
 			$dbTools->newTable($tableName,$tableDefinition,$primaryKey);
+			unset($tableDefinition);
 
 			$i=0;
 
@@ -41,70 +42,85 @@
 			$tableDefinition[++$i]['name'] = "wikiCategoryID";
 			$tableDefinition[$i]['definition'] = "INT";
 
+			$tableDefinition[++$i]['name'] = "title";
+			$tableDefinition[$i]['definition'] = "TEXT";
+
 			$primaryKey = "wikiPageID";
 
 			$dbTools->newTable($tableName,$tableDefinition,$primaryKey);
+			unset($tableDefinition);
 
-			$query = "
+			$i=0;
 
-				CREATE TABLE wiki_templates (
-						wikiTemplateID INT NOT NULL AUTO_INCREMENT,
-						name TEXT,
-						description TEXT,
-						PRIMARY KEY(wikiTemplateID)
-					); ";
+			$tableName = "wiki_templates";
 
-			if ($db->mysqli->query($query)) {
+			$tableDefinition[$i]['name'] = "wikiTemplateID";
+			$tableDefinition[$i]['definition'] = "INT NOT NULL AUTO_INCREMENT";
 
-				echo("wiki_pageTypes table created<br />");
+			$tableDefinition[++$i]['name'] = "name";
+			$tableDefinition[$i]['definition'] = "TEXT";
 
-			} else {
+			$tableDefinition[++$i]['name'] = "description";
+			$tableDefinition[$i]['definition'] = "TEXT";
 
-				echo($db->mysqli->error."<br />");
+			$primaryKey = "wikiTemplateID";
 
-			}
+			$dbTools->newTable($tableName,$tableDefinition,$primaryKey);
+			unset($tableDefinition);
 
-			$query = "
+			$i=0;
 
-				CREATE TABLE wiki_templateDefinitions (
-						wikiTemplateDefinitionID INT NOT NULL AUTO_INCREMENT,
-						wikiTemplateID INT,
-						headingOrder INT,
-						heading TEXT,
-						description TEXT,
-						dataType TEXT,
-						PRIMARY KEY(wikiTemplateDefinitionID)
-					); ";
+			$tableName = "wiki_templateDefinitions";
 
-			if ($db->mysqli->query($query)) {
+			$tableDefinition[$i]['name'] = "wikiTemplateDefinitionID";
+			$tableDefinition[$i]['definition'] = "INT NOT NULL AUTO_INCREMENT";
 
-				echo("wiki_pageTypeDefinitions table created <br />");
+			$tableDefinition[++$i]['name'] = "wikiTemplateID";
+			$tableDefinition[$i]['definition'] = "INT";
 
-			} else {
+			$tableDefinition[++$i]['name'] = "headingOrder";
+			$tableDefinition[$i]['definition'] = "INT";
 
-				echo($db->mysqli->error."<br />");
+			$tableDefinition[++$i]['name'] = "heading";
+			$tableDefinition[$i]['definition'] = "TEXT";
 
-			}
+			$tableDefinition[++$i]['name'] = "description";
+			$tableDefinition[$i]['definition'] = "TEXT";
 
-			$query = "
+			$tableDefinition[++$i]['name'] = "dataType";
+			$tableDefinition[$i]['definition'] = "TEXT";
 
-				CREATE TABLE wiki_pageContents (
-						wikiTemplateDefinitionID INT,
-						wikiPageID INT,
-						wikiTemplateID INT,
-						content TEXT,
-						PRIMARY KEY(wikiPageID,wikiTemplateID,wikiTemplateDefinitionID)
-					); ";
+			$primaryKey = "wikiTemplateDefinitionID";
 
-			if ($db->mysqli->query($query)) {
+			$dbTools->newTable($tableName,$tableDefinition,$primaryKey);
+			unset($tableDefinition);
 
-				echo("wiki_pageContent table created");
+			$i=0;
 
-			} else {
+			$tableName = "wiki_pageContents";
 
-				echo($db->mysqli->error."<br />");
+			$tableDefinition[$i]['name'] = "wikiTemplateDefinitionID";
+			$tableDefinition[$i]['definition'] = "INT";
 
-			}
+			$tableDefinition[++$i]['name'] = "wikiPageID";
+			$tableDefinition[$i]['definition'] = "INT";
+		
+			$tableDefinition[++$i]['name'] = "wikiTemplateID";
+			$tableDefinition[$i]['definition'] = "INT";
+			
+			$tableDefinition[++$i]['name'] = "content";
+			$tableDefinition[$i]['definition'] = "TEXT";
+
+			$tableDefinition[++$i]['name'] = "date";
+			$tableDefinition[$i]['definition'] = "INT";
+
+			$tableDefinition[++$i]['name'] = "isCurrent";
+			$tableDefinition[$i]['definition'] = "TINYINT";
+	
+			$primaryKey = "wikiPageID,wikiTemplateID,wikiTemplateDefinitionID,date";
+
+			$dbTools->newTable($tableName,$tableDefinition,$primaryKey);
+			unset($tableDefinition);
 
 		}
 

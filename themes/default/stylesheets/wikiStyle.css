@@ -7,15 +7,20 @@
 }
 
 .wikiCategoryBar {
-	border-bottom: 2px solid green;
 	margin: 0px 0px 10px 0px;
+	padding: 0px 0px 5px 0px;
+	border-bottom: 2px solid green;
 }
 
 .wikiCategoryBar h3 {
 	font-size: 12px;
-	margin: -13px 0px 2px 0px;
+	margin: -8px 0px 2px 0px;
 	padding: 0px;
 	font-weight: normal;
+}
+
+.wikiCategoryBar strong {
+	color: grey;
 }
 
 .wikiLinks {
@@ -70,6 +75,11 @@
 	float: right;
 	width: 50px;
 	padding: 2px 5px 1px 0px;
+}
+
+.wikiContent .textInput {
+	width: 725px;
+	font-size: 13px;
 }
 
 .wikiContent .text {
