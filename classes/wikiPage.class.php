@@ -42,7 +42,9 @@
 								WHERE
 									wtd.wikiTemplateID = ".$this->templateID."
 								AND
-									wpc.isCurrent = 1 
+									(wpc.isCurrent = 1
+									OR
+									wpc.isCurrent IS NULL)
 								ORDER BY
 									headingOrder
 								ASC

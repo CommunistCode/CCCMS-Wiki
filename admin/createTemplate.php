@@ -35,6 +35,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title>Admin Area - Mantis Wiki Module</title>
 		<link href="<?php echo($directoryPath); ?>/admin/stylesheet/stylesheet.css" rel="stylesheet" type="text/css" />
+
+		<script type="text/javascript" src="scripts/wikiAdmin.js"></script>
+
 	</head>
 	
 	<body>
@@ -69,11 +72,12 @@
 					
 					<br /><br />
 					
-					<table>
+					<table id="defTable">
 						<tr>
 							<th>Heading</th>
 							<th>Description</th>
 							<th>Data Type</th>
+							<th></th>
 						</tr>
 						
 						<?php
@@ -107,6 +111,7 @@
 					<br />
 
 					<input type='submit' value='Create Template' name='createTemplate' />
+					<input type='button' value='Add Extra Row' onclick="addDefinitionRow()" />
 
 				</form>
 

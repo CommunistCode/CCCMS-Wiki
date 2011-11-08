@@ -68,7 +68,15 @@
 
 			if (isset($_GET['wikiPageID'])) {
 
-				echo(" > <strong>Viewing Page</strong>");
+				if (isset($_POST['viewHistory'])) {
+
+					echo(" > <strong>Viewing History</strong>");
+
+				} else {
+			
+					echo(" > <strong>Viewing Page</strong>");
+
+				}
 
 			}
 

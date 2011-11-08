@@ -16,12 +16,16 @@
 			
 				} else if (isset($_POST['saveContent'])) {
 
-					$wikiTools->insertContent($wikiPage->getID(),
-																		$wikiPage->getTemplateID(),
-																		$_POST['definitionID'],
-																		$_POST['newContent']);
+					if (strcmp($_POST['newContent'],$contentPiece['content']) != 0) {
+
+						$wikiTools->insertContent($wikiPage->getID(),
+																			$wikiPage->getTemplateID(),
+																			$_POST['definitionID'],
+																			$_POST['newContent']);
 				
-					$contentPiece['content'] = $_POST['newContent'];
+						$contentPiece['content'] = $_POST['newContent'];
+
+					}
 
 				}
 				
@@ -36,16 +40,22 @@
 
 		$wikiContent .= "<form method='post' action='wikiPage.php?wikiPageID=".$_GET['wikiPageID']."'>";
 		$wikiContent .= "<input type='hidden' value='".$contentPiece['definitionID']."' name='definitionID' />";
+
 		if ($editMode == 1) {
 			
-			$wikiContent .= "<input type='submit' name='saveContent' value='Save'></td>";
+			$wikiContent .= "<input class='editSave' type='submit' name='saveContent' value='Save' />";
 		
 		} else {
 			
-			$wikiContent .= "<input type='submit' name='editContent' value='Edit'></td>";
+			$wikiContent .= "<input class='editSave' type='submit' name='editContent' value='Edit' />";
 
 		}
 
+		if ($contentPiece['content'] != "") {
+
+			$wikiContent .= "<input class='history' type='submit' name='viewHistory' value='History' /></td>";
+
+		}
 
 		$wikiContent .= "</tr>";
 		$wikiContent .= "<tr><td class='text' colspan=2 >";

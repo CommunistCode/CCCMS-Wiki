@@ -71,10 +71,18 @@
 	font-size: 13px;
 }
 
-.wikiContent .heading input {
+.wikiContent .heading .editSave {
 	float: right;
 	width: 50px;
-	padding: 2px 5px 1px 0px;
+	padding: 2px 3px 1px 0px;
+}
+
+
+.wikiContent .heading .history {
+	float: right;
+	width: 60px;
+	padding: 2px 3px 1px 0px;
+	margin: 0px 10px 0px 0px;
 }
 
 .wikiContent .textInput {
@@ -91,4 +99,25 @@
 
 .wikiContent .text em {
 	color: grey;
+}
+
+.historyTable td {
+padding: 5px;
+}
+
+.historyTable .isCurrent {
+background:green;
+}
+
+.historyTable .date {
+width: 100px;
+background: yellow;
+}
+
+.historyTable .member {
+width: 100px;
+background: red;
+}
+
+.historyTable .content {
 }

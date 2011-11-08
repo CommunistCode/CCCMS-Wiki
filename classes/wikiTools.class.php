@@ -2,6 +2,29 @@
 
 	class wikiTools {
 
+		public function getHistory($wikiPageID,$definitionID) {
+
+			$db = new dbConn();
+
+			$result = $db->selectWhere("date,content,memberID,isCurrent","wiki_pageContents","wikiTemplateDefinitionID=".$definitionID." AND wikiPageID=".$wikiPageID." ORDER BY date ASC");
+
+			$i=0;
+
+			while ($row=$result->fetch_assoc()) {
+
+				$historyArray[$i]['date'] = $row['date'];
+				$historyArray[$i]['content'] = $row['content'];
+				$historyArray[$i]['memberID'] = $row['memberID'];
+				$historyArray[$i]['isCurrent'] = $row['isCurrent'];
+
+				$i++;
+
+			}
+
+			return $historyArray;
+
+		}
+		
 		public function getCategoryPages($id) {
 
 			$db = new dbConn();
