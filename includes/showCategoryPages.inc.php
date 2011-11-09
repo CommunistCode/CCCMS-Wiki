@@ -33,3 +33,7 @@
 	}
 
 ?>
+
+<hr>
+
+<a href='createPage.php?categoryID=<?php echo($categoryID); ?>'>Create New Wiki Page</a>
