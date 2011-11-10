@@ -212,6 +212,39 @@
 
 
 		}
+
+		public function createPage($title,$template,$category) {
+
+			$db = new dbConn();
+
+			$db->insert("wiki_pages",
+									"wikiTemplateID,
+									 wikiCategoryID,
+									 title",
+									 $template.","
+									 .$category.",
+									 '".$title."'"
+									);
+
+			return $db->mysqli->insert_id;
+
+		}
+
+		public function getAllTemplates() {
+
+			$db = new dbConn();
+
+			$result = $db->select("wikiTemplateID,name","wiki_templates");
+
+			for ($i=0; $i<$result->num_rows; $i++) {
+
+				$templateArray[$i] = $result->fetch_assoc();
+
+			}
+
+			return $templateArray;
+
+		}
 		
 	}
 

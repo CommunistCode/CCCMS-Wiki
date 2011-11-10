@@ -2,9 +2,11 @@
 
 	$wikiTools = new wikiTools();
 
+	$templateArray = $wikiTools->getAllTemplates();
+
 ?>
 
-<form action='' method='post'>
+<form action='wikiPage.php' method='post'>
 
 	<label for='pageTitle'>Page Title:</label>
 	<input type='text' name='pageTitle'>
@@ -14,7 +16,15 @@
 	<label for='pageTemplate'>Page Template:</label>
 	<select name='pageTemplate'>
 
-		<option>List Page Templates Here</option>
+		<?php
+
+			foreach($templateArray as $template) {
+
+				echo("<option value='".$template['wikiTemplateID']."'>".$template['name']."</option>");
+
+			}
+
+		?>
 
 	</select>
 
@@ -33,6 +43,6 @@
 
 	<br /><br />
 
-	<input type='submit' value='Create Page' />
+	<input type='submit' value='Create Page' name='doCreatePage' />
 
 </form>

@@ -15,7 +15,22 @@
 	}
 
 	$wikiTools = new wikiTools();
-	$wikiPage = new wikiPage($_GET['wikiPageID']);
+
+	if (isset($_GET['wikiPageID'])) {
+
+		$wikiPageID = $_GET['wikiPageID'];
+
+	} else if ($_POST['doCreatePage']) {
+
+		$wikiPageID = $wikiTools->createPage($_POST['pageTitle'],$_POST['pageTemplate'],$_POST['pageCategory']);
+
+	} else {
+		
+		$wikiPageID = 0;
+
+	}
+
+	$wikiPage = new wikiPage($wikiPageID);
 
 	$heading = $wikiPage->getTitle();
 	

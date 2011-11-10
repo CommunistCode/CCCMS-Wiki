@@ -18,23 +18,6 @@
 
 		}
 
-		public function getAllTemplates() {
-
-			$db = new dbConn();
-
-			$result = $db->select("wikiTemplateID,name","wiki_templates");
-			
-			for ($i=0; $i<$result->num_rows; $i++) {
-
-				$templateArray[$i] = $result->fetch_assoc();
-
-			}
-
-			return $templateArray;
-
-
-		}
-
 		public function createTemplate($name, $description, $templateArray) {
 
 			$db = new dbConn();

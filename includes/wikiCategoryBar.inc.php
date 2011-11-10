@@ -8,6 +8,10 @@
 
 		$categoryID = $wikiPage->getCategoryID();
 
+	} else if (isset($_POST['pageCategory'])) {
+
+		$categoryID = $_POST['pageCategory'];
+
 	} else {
 
 		$categoryID = 0;

@@ -28,7 +28,8 @@
 			$query = "SELECT 
 									wpc.content,
 									wtd.heading,
-									wtd.wikiTemplateDefinitionID
+									wtd.wikiTemplateDefinitionID,
+									wtd.dataType 
 								FROM 
 									wiki_templateDefinitions wtd
 								LEFT JOIN
@@ -57,7 +58,7 @@
 			while ($row = $result->fetch_assoc()) {
 
 				$wikiPageArray[$i]['heading'] = $row['heading'];
-
+				$wikiPageArray[$i]['dataType'] = $row['dataType'];
 				$wikiPageArray[$i]['definitionID'] = $row['wikiTemplateDefinitionID'];
 
 				if (isset($row['content'])) {
