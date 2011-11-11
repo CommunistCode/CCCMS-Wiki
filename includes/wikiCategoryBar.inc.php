@@ -42,7 +42,6 @@
 ?>
 
 <div class='wikiCategoryBar'>
-	<h3>
 
 		<?php
 			
@@ -86,5 +85,4 @@
 
 		?>
 
-	</h3>
 </div>

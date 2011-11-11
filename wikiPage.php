@@ -36,6 +36,7 @@
 	
 	if (!isset($_POST['viewHistory'])) {
 
+		$pageEditButton = true;
 		$include = "includes/wikiPage.inc.php";
 
 	} else {

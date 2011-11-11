@@ -33,10 +33,9 @@
 
 		}
 		
-		$wikiContent  = "<table class='wikiContent'>";
-		$wikiContent .= "<tr>";
+		$wikiContent  = "<div class='wikiContent'>";
 		
-		$wikiContent .= "<td class='heading'><h3>".$contentPiece['heading']."</h3>";
+		$wikiContent .= "<div class='heading'><h3>".$contentPiece['heading']."</h3>";
 
 		$wikiContent .= "<form method='post' action='wikiPage.php?wikiPageID=".$wikiPageID."'>";
 		$wikiContent .= "<input type='hidden' value='".$contentPiece['definitionID']."' name='definitionID' />";
@@ -53,12 +52,12 @@
 
 		if ($contentPiece['content'] != "") {
 
-			$wikiContent .= "<input class='history' type='submit' name='viewHistory' value='History' /></td>";
+			$wikiContent .= "<input class='history' type='submit' name='viewHistory' value='History' />";
 
 		}
 
-		$wikiContent .= "</tr>";
-		$wikiContent .= "<tr><td class='text' colspan=2 >";
+		$wikiContent .= "</div>";
+		$wikiContent .= "<div class='text'>";
 
 		if ($editMode == 1) {
 
@@ -88,9 +87,8 @@
 
 		$wikiContent .= "</form>";
 		
-		$wikiContent .= "</td></tr>";
-		
-		$wikiContent .= "</table>";
+		$wikiContent .= "</div>";
+		$wikiContent .= "</div>";
 		
 		echo($wikiContent);
 

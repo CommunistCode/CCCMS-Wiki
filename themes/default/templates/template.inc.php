@@ -31,7 +31,9 @@
 		
 			  <?php
 
+					echo("<div class='pageHeading'>");
 					echo("<h1>".$heading."</h1>");
+					echo("</div>");
 					
 					require_once("includes/wikiCategoryBar.inc.php");
 
