@@ -1,39 +1,43 @@
-<?php
+<div class='wikiShowCategoryPages'>
 
-	echo("Pages in current category:<br /><br />");
+	<?php
 
-	$wikiTools = new wikiTools();
+		$wikiTools = new wikiTools();
 
-	if (isset($_GET['categoryID'])) {
+		if (isset($_GET['categoryID']) && $_GET['categoryID'] != 0) {
 
-		$categoryID = $_GET['categoryID'];
+			$categoryID = $_GET['categoryID'];
+			$pageArray = $wikiTools->getCategoryPages($categoryID);
+	
+			if (isset($pageArray)) {
 
-	} else {
+				echo("<h4>Category Pages:</h4>");
 
-		$categoryID = 0;
+				echo("<ul>");
 
-	}
+				foreach($pageArray as $page) {
 
-	$pageArray = $wikiTools->getCategoryPages($categoryID);
+					echo("<li><a href='wikiPage.php?wikiPageID=".$page['wikiPageID']."&categoryID=".$categoryID."'>".$page['title']."</a>");
 
-	if (isset($pageArray)) {
+				}
 
-		foreach($pageArray as $page) {
+				echo("</ul>");
 
-			echo("<a href='wikiPage.php?wikiPageID=".$page['wikiPageID']."&categoryID=".$categoryID."'>".$page['title']."</a>");
+			} else {
 
-			echo("<br />");
+				echo("<strong>There are currently no pages in this category!</strong>");
+
+			}
+
+		} else {
+
+			$categoryID = 0;
+			$pageArray = $pageTools->getDynamicContent($pageTools->getPageIDbyDirectLink("wiki/index.php"));
+
+			echo("<p>".$pageTools->matchTags($pageArray['text'])."</p>");
 
 		}
 
-	} else {
+	?>
 
-		echo("No pages in this category!");
-
-	}
-
-?>
-
-<hr>
-
-<a href='createPage.php?categoryID=<?php echo($categoryID); ?>'>Create New Wiki Page</a>
+</div>

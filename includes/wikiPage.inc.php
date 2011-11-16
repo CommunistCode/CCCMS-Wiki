@@ -42,17 +42,18 @@
 
 		if ($editMode == 1) {
 			
-			$wikiContent .= "<input class='editSave' type='submit' name='saveContent' value='Save' />";
+			$wikiContent .= "<input class='cancelButton highlightHover' type='submit' name='cancelEdit' value='x' />";
+			$wikiContent .= "<input class='editSave highlightHover' type='submit' name='saveContent' value='Save' />";
 		
 		} else {
 			
-			$wikiContent .= "<input class='editSave' type='submit' name='editContent' value='Edit' />";
+			$wikiContent .= "<input class='editSave highlightHover' type='submit' name='editContent' value='Edit' />";
 
 		}
 
 		if ($contentPiece['content'] != "") {
 
-			$wikiContent .= "<input class='history' type='submit' name='viewHistory' value='History' />";
+			$wikiContent .= "<input class='history highlightHover' type='submit' name='viewHistory' value='History' />";
 
 		}
 

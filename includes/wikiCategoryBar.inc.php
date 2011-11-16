@@ -51,7 +51,7 @@
 
 					if ($categoryBarArray[$i] == 0) {
 
-						echo("<a href='index.php?categoryID=0'>Base</a>");
+						echo("<a href='index.php?categoryID=0'>Home</a>");
 
 					} else {
 						

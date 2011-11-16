@@ -1,10 +1,11 @@
 <?php
 
 	$wikiTools = new wikiTools();
-
 	$templateArray = $wikiTools->getAllTemplates();
 
 ?>
+
+<br />
 
 <form action='wikiPage.php' method='post'>
 
@@ -43,6 +44,6 @@
 
 	<br /><br />
 
-	<input type='submit' value='Create Page' name='doCreatePage' />
+	<input class='highlightHover' type='submit' value='Create Page' name='doCreatePage' />
 
 </form>

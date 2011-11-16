@@ -2,6 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600' rel='stylesheet' type='text/css'>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title><?php echo($title." : ".$pageContent['title']); ?></title>
 		<link href="../themes/<?php echo($pageTools->getTheme("base")); ?>/stylesheets/base.css" rel="stylesheet" type="text/css" />
@@ -35,7 +36,11 @@
 					echo("<h1>".$heading."</h1>");
 					echo("</div>");
 					
-					require_once("includes/wikiCategoryBar.inc.php");
+					if (!isset($disableWikiCategoryBar)) {
+						
+						require_once("includes/wikiCategoryBar.inc.php");
+
+					}
 
 					if (isset($help)) {
 						

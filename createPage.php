@@ -9,6 +9,8 @@
 	$heading = "Create New Page";
 	$include = "includes/createPage.inc.php";
 
+	$disableWikiCategoryBar = true;
+
 	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");
 
 ?>

@@ -25,7 +25,7 @@
 
 		}
 		
-		public function getCategoryPages($id) {
+		public function getCategoryPages($id, $limit = NULL) {
 
 			$db = new dbConn();
 
@@ -41,6 +41,12 @@
 								WHERE
 									wp.wikiCategoryID = ".$id."
 							 ";
+
+			if ($limit != NULL) {
+
+				$query .= "LIMIT ".$limit;
+
+			}
 
 			$result = $db->mysqli->query($query);
 
@@ -243,6 +249,40 @@
 			}
 
 			return $templateArray;
+
+		}
+
+		public function getCategoryTree($categoryID) {
+
+			$treeArray = array();
+
+			$i = 0;
+
+			$treeArray[$i]['name'] = $this->getCategoryName($categoryID);
+			$treeArray[$i]['id'] = $categoryID;
+
+			while ($parentID = $this->getCategoryParentID($categoryID)) {
+
+				$i++;
+
+				$treeArray[$i]['name'] = $this->getCategoryName($parentID);
+				$treeArray[$i]['id'] = $parentID;
+
+				$categoryID = $parentID;
+
+			}
+
+			$z = 0;
+
+			for ($i = (count($treeArray)-1); $i>=0; $i--) {
+
+				$sortedTreeArray[$z]['name'] = $treeArray[$i]['name'];
+				$sortedTreeArray[$z]['id'] = $treeArray[$i]['id'];
+				$z++;
+
+			}
+
+			return $sortedTreeArray;
 
 		}
 		
