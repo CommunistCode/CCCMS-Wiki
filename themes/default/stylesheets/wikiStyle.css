@@ -32,6 +32,7 @@
 
 .wikiCategoryBar a {
 	font-weight: normal;
+	font-size: 12px;
 	padding: 0px;
 	margin: 0px;
 }
@@ -168,11 +169,11 @@ height: 21px;
 	padding: 2px 3px 1px 0px;
 	border: 1px solid grey;
 	color: #3B3A3A;
-	margin: 0px 10px 0px 0px;
+	margin: 0px 5px 0px 0px;
 }
 
 .wikiContent .textInput {
-	width: 730px;
+	width: 98.5%;
 	font-size: 13px;
 }
 

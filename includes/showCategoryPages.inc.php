@@ -34,7 +34,7 @@
 			$categoryID = 0;
 			$pageArray = $pageTools->getDynamicContent($pageTools->getPageIDbyDirectLink("wiki/index.php"));
 
-			echo("<p>".$pageTools->matchTags($pageArray['text'])."</p>");
+			echo($pageTools->matchTags($pageArray['text']));
 
 		}
 
