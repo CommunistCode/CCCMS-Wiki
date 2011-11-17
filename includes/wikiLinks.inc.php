@@ -103,7 +103,15 @@
 
 		foreach ($popularPageArray as $popularPage) {
 
-			echo("<li><a href='wikiPage.php?wikiPageID=".$popularPage['wikiPageID']."&categoryID=".$categoryID."'>".$popularPage['title']."</a></li>");
+			$popularPageTitle = $popularPage['title'];
+
+			if (strlen($popularPageTitle) > 15) {
+
+				$popularPageTitle = substr($popularPageTitle,0,15)."&hellip;";
+
+			}
+
+			echo("<li><a href='wikiPage.php?wikiPageID=".$popularPage['wikiPageID']."&categoryID=".$categoryID."'>".$popularPageTitle."</a></li>");
 
 		}
 
