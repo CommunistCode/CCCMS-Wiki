@@ -191,6 +191,8 @@
 			$time = time();
 			$member = unserialize($_SESSION['member']);
 
+			$contents = addslashes($contents);
+
 			if ($db->insert("wiki_pageContents",
 									"wikiTemplateDefinitionID,
 									 wikiPageID,

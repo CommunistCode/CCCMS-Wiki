@@ -112,9 +112,9 @@
 }
 
 .wikiContent .heading {
-height: 21px;
+	height: 21px;
 	margin: 0px;
-	padding: 5px;
+	padding: 5px 5px 8px 5px;
 	background: #EBEBEB;
 	font-weight: bold;
 	font-size: 13px;
@@ -130,6 +130,8 @@ height: 21px;
 .wikiContent .heading .editSave {
 	float: right;
 	width: 50px;
+	height: 21px;
+	margin: 2px 0px 0px 0px;
 	padding: 2px 3px 1px 0px;
 	border: 1px solid grey;
 	color: #3B3A3A;
@@ -139,7 +141,7 @@ height: 21px;
 	float:right;
 	width: 25px;
 	height: 21px;
-	margin: 0px 0px 0px 5px;
+	margin: 2px 0px 0px 5px;
 	padding: 0px 0px 3px 1px;
 	border: 1px solid grey;
 	color: #3B3A3A;
@@ -169,7 +171,7 @@ height: 21px;
 	padding: 2px 3px 1px 0px;
 	border: 1px solid grey;
 	color: #3B3A3A;
-	margin: 0px 5px 0px 0px;
+	margin: 2px 5px 0px 0px;
 }
 
 .wikiContent .textInput {
@@ -180,7 +182,7 @@ height: 21px;
 .wikiContent .text {
 	border-top: 1px solid grey;
 	margin: 0px 0px 0px 0px;
-	padding: 10px 5px 5px 5px;
+	padding: 10px 5px 8px 5px;
 	font-size: 13px;
 }
 

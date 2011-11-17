@@ -76,7 +76,7 @@
 
 			if ($contentPiece['content'] != "") {
 
-				$wikiContent .= $contentPiece['content'];
+				$wikiContent .= $pageTools->matchTags($contentPiece['content']);
 			
 			} else {
 
