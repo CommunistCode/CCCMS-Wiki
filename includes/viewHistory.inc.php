@@ -4,7 +4,7 @@
 
 	$wikiHistoryArray = $wikiTools->getHistory($_GET['wikiPageID'], $_POST['definitionID']);
 
-	echo("<br /><a href='wikiPage.php?wikiPageID=".$_GET['wikiPageID']."'>Back to Wiki Page</a><br /><br />");
+	echo("<a href='wikiPage.php?wikiPageID=".$_GET['wikiPageID']."'>Back to Wiki Page</a><br /><br />");
 
 	$wikiHistoryTable = "<table class='historyTable'>";
 
