@@ -113,7 +113,7 @@
 
 			}
 
-			echo("<li><a href='wikiPage.php?wikiPageID=".$popularPage['wikiPageID']."&categoryID=".$categoryID."'>".$popularPageTitle."</a></li>");
+			echo("<li><a href='wikiPage.php?wikiPageID=".$popularPage['wikiPageID']."&categoryID=".$categoryID."' title='".$popularPageTitle."'>".$popularPageTitle."</a></li>");
 
 		}
 
