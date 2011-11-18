@@ -10,14 +10,18 @@
 
 			while ($data = $result->fetch_assoc()) {
 
-				$runningTotal = $runningTotal + $this->countPagesInCategoryRecurring($data['wikiCategoryID'], $runningTotal);
+				$runningTotal = $this->countPagesInCategoryRecurring($data['wikiCategoryID'], $runningTotal);
 
 			}
 			
 			$countResult = $db->selectWhere("COUNT(wikiPageID) as count","wiki_pages","wikiCategoryID=".$categoryID);
-			$thisCount = $countResult->fetch_assoc();
-				
-			$runningTotal = $runningTotal + $thisCount['count'];
+
+			if (isset($countResult)) {
+
+				$thisCount = $countResult->fetch_assoc();
+				$runningTotal = $runningTotal + $thisCount['count'];
+
+			}
 
 			return $runningTotal;
 
