@@ -2,6 +2,27 @@
 
 	class wikiTools {
 
+		public function countPagesInCategoryRecurring($categoryID, $runningTotal = 0) {
+
+			$db = new dbConn();
+
+			$result = $db->selectWhere("wikiCategoryID","wiki_categories","parentCategoryID=".$categoryID);
+
+			while ($data = $result->fetch_assoc()) {
+
+				$runningTotal = $runningTotal + $this->countPagesInCategoryRecurring($data['wikiCategoryID'], $runningTotal);
+
+			}
+			
+			$countResult = $db->selectWhere("COUNT(wikiPageID) as count","wiki_pages","wikiCategoryID=".$categoryID);
+			$thisCount = $countResult->fetch_assoc();
+				
+			$runningTotal = $runningTotal + $thisCount['count'];
+
+			return $runningTotal;
+
+		}
+		
 		public function getHistory($wikiPageID,$definitionID) {
 
 			$db = new dbConn();

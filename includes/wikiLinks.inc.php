@@ -51,7 +51,8 @@
 
 			}
 
-			echo(str_repeat("-",$i)." <a href='index.php?categoryID=".$tree['id']."'>".$tree['name']."</a>");
+			echo(str_repeat("-",$i)." <a href='index.php?categoryID=".$tree['id']."'>".$tree['name']."</a> ");
+			echo("(".$wikiTools->countPagesInCategoryRecurring($tree['id']).")");
 
 			if ($currentCategory) {
 
@@ -85,7 +86,8 @@
 
 		foreach ($categoryArray as $category) {
 
-			echo("<li><a href='index.php?categoryID=".$category['wikiCategoryID']."'>".$category['name']."</a></li>");
+			echo("<li><a href='index.php?categoryID=".$category['wikiCategoryID']."'>".$category['name']."</a> ");
+			echo("(".$wikiTools->countPagesInCategoryRecurring($category['wikiCategoryID']).")</li>");
 
 		}
 

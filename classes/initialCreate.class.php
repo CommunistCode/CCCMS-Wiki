@@ -140,19 +140,8 @@
 
 			else {
 
-				$query = "
-
-					INSERT INTO version (
-						module,
-						version,
-						theme
-					) values (
-						'wiki',
-						'1.0.0',
-						'default'
-					); ";
-
-				if ($db->mysqli->query($query)) {
+				
+				if ($db->insert("version","module,version,theme","'wiki','1.0.0','default'")) {
 
 					echo("version populated<br />");
 
@@ -160,7 +149,7 @@
 
 			}
 		
-			$adminDBTools->newContent("Wiki Module","wiki/admin/wikiModules.php","main");
+			$adminDBTools->newContent("Wiki Module","wiki/admin/wikiModule.php","main");
 			$adminDBTools->newContent("Create Template","wiki/admin/createTemplate.php","Wiki Module");
 			$adminDBTools->newContent("Delete Template","wiki/admin/deleteTemplate.php","Wiki Module");
 
