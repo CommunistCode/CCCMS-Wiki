@@ -106,6 +106,7 @@
 		foreach ($popularPageArray as $popularPage) {
 
 			$popularPageTitle = $popularPage['title'];
+			$popularPageTitleOrig = $popularPage['title'];
 
 			if (strlen($popularPageTitle) > 15) {
 
@@ -113,7 +114,7 @@
 
 			}
 
-			echo("<li><a href='wikiPage.php?wikiPageID=".$popularPage['wikiPageID']."&categoryID=".$categoryID."' title='".$popularPageTitle."'>".$popularPageTitle."</a></li>");
+			echo("<li><a href='wikiPage.php?wikiPageID=".$popularPage['wikiPageID']."&categoryID=".$categoryID."' title='".$popularPageTitleOrig."'>".$popularPageTitle."</a></li>");
 
 		}
 
