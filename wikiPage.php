@@ -44,7 +44,9 @@
 		$include = "includes/viewHistory.inc.php";
 
 	}
-	
+
+	$pageTitle = $heading;
+
 	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");
 
 ?>

@@ -7,6 +7,7 @@
 
 	$wikiTools = new wikiTools();
 
+	$pageTitle = "Wiki Home";
 	$heading = "Wiki";
 	$include = "includes/showCategoryPages.inc.php";
 

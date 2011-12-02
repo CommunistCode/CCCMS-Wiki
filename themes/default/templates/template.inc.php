@@ -4,7 +4,7 @@
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600' rel='stylesheet' type='text/css'>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title><?php echo($title." : ".$pageContent['title']); ?></title>
+		<title><?php echo($title .":". $pageTitle); ?></title>
 		<link href="../themes/<?php echo($pageTools->getTheme("base")); ?>/stylesheets/base.css" rel="stylesheet" type="text/css" />
 		<link href="themes/<?php echo($pageTools->getTheme("wiki")); ?>/stylesheets/wikiStyle.css" rel="stylesheet" type="text/css" />
 	</head>
