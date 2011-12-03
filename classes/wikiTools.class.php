@@ -64,7 +64,10 @@
 								ON
 									wp.wikiPageID = wpc.wikiPageID
 								WHERE
-									wp.wikiCategoryID = ".$id."
+									wp.wikiCategoryID = ".$id." 
+								ORDER BY
+									wp.title 
+								ASC
 							 ";
 
 			if ($limit != NULL) {
