@@ -249,6 +249,49 @@
 
 		}
 
+		function insertImage($wikiID,$templateDefinitionID,$tmpImageLocation, $caption) {
+
+			// Manage and upload image
+
+			$db = new dbConn();
+
+			$time = time();
+			$member = unserialize($_SESSION['member']);
+
+			if ($imageInfo = getimagesize($tmpImageLocation)) {
+
+				if ($imageInfo['mime'] != "image/jpeg") {
+
+					return "Image type was not JPEG!";
+
+				}
+
+			}
+
+			$caption = addslashes($caption);
+
+			$db->insert("wiki_pageImages",
+									"wikiPageID,
+									 wikiTemplateDefinitionID,
+									 caption,
+									 memberID,
+									 date",
+									 "'".$wikiID."',
+									 '".$templateDefinitionID."',
+									 '".$caption."',
+									 '".$member->getID()."',
+									 '".$time."'");
+
+			$uniqueID = $db->mysqli->insert_id;
+
+			$path = "wikiUserImages/".$uniqueID.".jpg";
+
+			move_uploaded_file($tmpImageLocation, $path);
+
+			$db->update("wiki_pageImages","type='".$imageInfo['mime']."'","imageID=".$uniqueID);
+
+		}
+
 		public function createPage($title,$template,$category) {
 
 			$db = new dbConn();
@@ -313,6 +356,100 @@
 			}
 
 			return $sortedTreeArray;
+
+		}
+
+		function generateInput($wikiContentType, $wikiContent) {
+
+			switch($wikiContentType) {
+
+				case "text":
+					
+					$inputElement = "<input class='textInput' name='newContent' type='text' value='".$wikiContent."' />";
+					break;
+
+				case "textarea":
+					
+					$inputElement = "<textarea rows='4' class='textInput' name='newContent' >".$wikiContent."</textarea>";
+					break;
+
+				case "image":
+
+					$inputElement = "<label for='newPhoto'>Image Location: </label><input class='textInput' type='file' name='newImage' />";
+					$inputElement .= "<br /><br />";
+					$inputElement .= "<label for='caption'>Caption: </label><input class='textInput' type='text' name='imageCaption'/>";
+
+					break;
+
+			}
+
+			return $inputElement;
+
+		}
+
+		function getImageDetails($imageID) {
+
+			$db = new dbConn();
+
+			$result = $db->selectWhere("wikiPageID, 
+																	wikiTemplateDefinitionID, 
+																	caption, 
+																	date, 
+																	memberID",
+																 "wiki_pageImages",
+																 "imageID=".$imageID);
+
+			$image = $result->fetch_assoc();
+
+			$imageDetails['wikiPageID'] = $image['wikiPageID'];
+			$imageDetails['wikiTemplateDefinitionID'] = $image['wikiTemplateDefinitionID'];
+			$imageDetails['caption'] = $image['caption'];
+			$imageDetails['date'] = $image['date'];
+			$imageDetails['memberID'] = $image['memberID'];
+
+			$result = $db->selectWhere("*","wiki_pageImages","wikiPageID=".$image['wikiPageID']." AND wikiTemplateDefinitionID=".$image['wikiTemplateDefinitionID']." ORDER BY date ASC");
+
+			$imageSetArray = array();
+
+			while ($image = $result->fetch_assoc()) {
+
+				array_push($imageSetArray, $image);
+
+				if ($image['imageID'] == $imageID) {
+
+					$imageDetails['imageIndex'] = count($imageSetArray) - 1;
+
+				}
+
+			}
+			
+			$imageDetails['noImagesInSet'] = count($imageSetArray);
+			
+			if (($imageDetails['imageIndex'] + 1) <= ($imageDetails['noImagesInSet'] - 1)) {
+
+				$imageDetails['nextImage'] = $imageSetArray[$imageDetails['imageIndex'] + 1]['imageID'];
+
+			}
+
+			if (($imageDetails['imageIndex'] - 1) >= 0) {
+
+				$imageDetails['prevImage'] = $imageSetArray[$imageDetails['imageIndex'] - 1]['imageID'];
+
+			}
+
+			return $imageDetails;
+
+		}
+
+		function getWikiTitle($wikiID) {
+
+			$db = new dbConn();
+
+			$result = $db->selectWhere("title","wiki_pages","wikiPageID=".$wikiID);
+
+			$data = $result->fetch_assoc();
+
+			return $data['title'];
 
 		}
 		

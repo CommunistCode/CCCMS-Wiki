@@ -147,6 +147,28 @@
 	color: #3B3A3A;
 }
 
+.wikiContent .uploadButton {
+	float:right;
+	width: 90px;
+	height: 21px;
+	margin: 2px 0px 0px 5px;
+	padding: 0px 0px 3px 1px;
+	border: 1px solid grey;
+	color: #3B3A3A;
+}
+
+.wikiImage {
+	max-width: 174.2px;
+	max-height: 200px;
+	margin: 0px 0px 0px 5px;
+}
+
+.wikiImageFull {
+	margin: 25px 0px 0px 5%;
+	max-width: 90%;
+	max-height: 500px;
+}
+
 .wikiAdminBar {
 	width: 100%;
 	margin: 10px 0px 0px 0px;
@@ -188,6 +210,36 @@
 
 .wikiContent .text em {
 	color: grey;
+}
+
+.imageCaption {
+	background: #DDD;
+	padding: 10px;
+	border: 1px solid grey;
+	text-align: center;
+}
+
+.imageNo {
+	text-align: center;
+	margin: 10px 0px 10px 0px;
+}
+
+.fullImageLinkTable {
+	width: 100%;
+}
+
+.prevLink {
+	width: 100px;
+	text-align: left;
+}
+
+.centerLink {
+	text-align: center;
+}
+
+.nextLink {
+	width: 100px;
+	text-align: right;
 }
 
 .historyTable td {

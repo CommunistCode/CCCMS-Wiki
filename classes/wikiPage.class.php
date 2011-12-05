@@ -79,6 +79,44 @@
 			
 		}
 
+		function getImages($definitionID) {
+
+			$query = "SELECT  
+									* 
+								FROM 
+									wiki_pageImages 
+								WHERE 
+									wikiPageID=".$this->id." 
+								AND 
+									wikiTemplateDefinitionID=".$definitionID."
+							 ";
+
+			$db = new dbConn();
+
+			$result = $db->mysqli->query($query);
+
+			if (!$result->num_rows) {
+
+				return "No images have been added!";
+
+			}
+
+			for ($i=0; $i<$result->num_rows; $i++) {
+
+				$row = $result->fetch_assoc();
+
+				$imageArray[$i]['imageID'] = $row['imageID'];
+				$imageArray[$i]['type'] = $row['type'];
+				$imageArray[$i]['caption'] = $row['caption'];
+				$imageArray[$i]['date'] = $row['date'];
+				$imageArray[$i]['memberID'] = $row['memberID'];
+
+			}
+
+			return $imageArray;
+
+		}
+
 		public function getWikiPageArray() {
 
 			return $this->wikiPageArray;

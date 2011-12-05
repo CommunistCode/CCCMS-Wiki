@@ -6,38 +6,51 @@
 
 		$editMode = 0;
 	
-		if (isset($_POST['definitionID'])) {
+		if ((isset($_POST['definitionID'])) && ($_POST['definitionID'] == $contentPiece['definitionID'])) {
 
-			if ($_POST['definitionID'] == $contentPiece['definitionID']) {
+			if (isset($_POST['editContent'])) {
 
-				if (isset($_POST['editContent'])) {
-
-					$editMode = 1;
+				$editMode = 1;
 			
-				} else if (isset($_POST['saveContent'])) {
+			} else if (isset($_POST['saveContent'])) {
 
-					if (strcmp($_POST['newContent'],$contentPiece['content']) != 0) {
+				if (isset($_FILES['newImage'])) {
 
-						$wikiTools->insertContent($wikiPage->getID(),
-																			$wikiPage->getTemplateID(),
-																			$_POST['definitionID'],
-																			$_POST['newContent']);
-				
-						$contentPiece['content'] = $_POST['newContent'];
+					if (isset($_POST['imageCaption'])) {
+
+						$status = $wikiTools->insertImage($wikiPage->getID(),
+																							$_POST['definitionID'],
+																							$_FILES['newImage']['tmp_name'],
+																							$_POST['imageCaption']);
+
+						header("Location: wikiPage.php?wikiPageID=".$wikiPageID."");
+						exit;
 
 					}
 
-				}
-				
-			}
+				} else if (strcmp($_POST['newContent'],$contentPiece['content']) != 0) {
 
+					$wikiTools->insertContent($wikiPage->getID(),
+																		$wikiPage->getTemplateID(),
+																		$_POST['definitionID'],
+																		$_POST['newContent']);
+				
+					$contentPiece['content'] = $_POST['newContent'];
+
+					header("Location: wikiPage.php?wikiPageID=".$wikiPageID."");
+					exit;
+
+				}
+
+			}
+				
 		}
 		
 		$wikiContent  = "<div class='wikiContent'>";
 		
 		$wikiContent .= "<div class='heading'><h3>".$contentPiece['heading']."</h3>";
 
-		$wikiContent .= "<form method='post' action='wikiPage.php?wikiPageID=".$wikiPageID."'>";
+		$wikiContent .= "<form method='post' action='wikiPage.php?wikiPageID=".$wikiPageID."' enctype='multipart/form-data'>";
 		$wikiContent .= "<input type='hidden' value='".$contentPiece['definitionID']."' name='definitionID' />";
 
 		if ($editMode == 1) {
@@ -47,7 +60,15 @@
 		
 		} else {
 			
-			$wikiContent .= "<input class='editSave highlightHover' type='submit' name='editContent' value='Edit' />";
+			if ($contentPiece['dataType'] == "image") {
+				
+			$wikiContent .= "<input class='uploadButton highlightHover' type='submit' name='editContent' value='Upload Image' />";
+			
+			} else {
+				
+				$wikiContent .= "<input class='editSave highlightHover' type='submit' name='editContent' value='Edit' />";
+
+			}
 
 		}
 
@@ -62,22 +83,34 @@
 
 		if ($editMode == 1) {
 
-			if ($contentPiece['dataType'] == "textarea") {
-
-				$wikiContent .= "<textarea rows='4' class='textInput' name='newContent' >".$contentPiece['content']."</textarea>";
-
-			} else {
+			$wikiContent .= $wikiTools->generateInput($contentPiece['dataType'], $contentPiece['content']);
 			
-				$wikiContent .= "<input class='textInput' name='newContent' type='".$contentPiece['dataType']."' value='".$contentPiece['content']."' />";
-
-			}
-
 		} else {
 
 			if ($contentPiece['content'] != "") {
 
 				$wikiContent .= $pageTools->matchTags($contentPiece['content']);
 			
+			} else if ($contentPiece['dataType'] == "image") {
+
+				if ($imageArray = $wikiPage->getImages($contentPiece['definitionID'])) {
+
+					if (getType($imageArray) == "array") {
+
+						foreach ($imageArray as $image) {
+
+							$wikiContent .= "<a href='viewImage.php?imageID=".$image['imageID']."'><img class='wikiImage' src='wikiUserImages/".$image['imageID'].".jpg' /></a>";
+
+						}
+
+					} else {
+
+						$wikiContent .= "<em>".$imageArray."</em>";
+
+					}
+
+				}
+
 			} else {
 
 				$wikiContent .= "<em>No information added yet!</em>";
