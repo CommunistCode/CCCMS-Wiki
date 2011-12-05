@@ -9,7 +9,7 @@
 
 ?>
 
-<img class='wikiImageFull' src='wikiUserImages/<?php echo($_GET['imageID']); ?>.jpg'>
+<div class='wikiImageFullContainer'><img class='wikiImageFull' src='wikiUserImages/<?php echo($_GET['imageID']); ?>.jpg'></div>
 
 <?php echo("<p class='imageNo'>".$wikiTools->getWikiTitle($imageDetailsArray['wikiPageID'])." - Image (".($imageDetailsArray['imageIndex']+1)."/".$imageDetailsArray['noImagesInSet'].") - Uploaded by: ".$memberTools->getUsername($imageDetailsArray['memberID'])."</p>"); ?>
 

@@ -99,9 +99,11 @@
 
 						foreach ($imageArray as $image) {
 
-							$wikiContent .= "<a href='viewImage.php?imageID=".$image['imageID']."'><img class='wikiImage' src='wikiUserImages/".$image['imageID'].".jpg' /></a>";
+							$wikiContent .= "<div class='imageThumbContainer'><a href='viewImage.php?imageID=".$image['imageID']."'><img class='wikiImage' src='wikiUserImages/".$image['imageID'].".jpg' /></a></div>";
 
 						}
+
+						$wikiContent .= "<div class='imageThumbClear'></div>";
 
 					} else {
 

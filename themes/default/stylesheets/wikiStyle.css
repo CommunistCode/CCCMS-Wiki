@@ -157,16 +157,37 @@
 	color: #3B3A3A;
 }
 
+.imageThumbContainer {
+	float: left;
+	line-height: 140px;
+	width: 168px;
+	height: 140px;
+	padding: 7px;
+	text-align: center;
+	margin: 0px;
+}
+
+.imageThumbClear {
+	clear: both;
+}
+
 .wikiImage {
-	max-width: 174.2px;
-	max-height: 200px;
-	margin: 0px 0px 0px 5px;
+	max-width: 155px;
+	max-height: 140px;
+	vertical-align: middle;
+}
+
+.wikiImageFullContainer {
+	margin: 5px 0px 0px 20px;
+	width: 700px;
+	max-height: 515px;
+	text-align: center;
 }
 
 .wikiImageFull {
-	margin: 25px 0px 0px 5%;
-	max-width: 90%;
-	max-height: 500px;
+	margin: 12.5px 0px 0px 0px;
+	max-width: 690px;
+	max-height: 490px;
 }
 
 .wikiAdminBar {
@@ -223,6 +244,7 @@
 	text-align: center;
 	margin: 10px 0px 10px 0px;
 }
+
 
 .fullImageLinkTable {
 	width: 100%;
