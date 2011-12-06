@@ -25,8 +25,8 @@
 																							$_FILES['newImage']['tmp_name'],
 																							$_POST['imageCaption']);
 
-						header("Location: wikiPage.php?wikiPageID=".$wikiPageID."");
-						exit;
+						//header("Location: wikiPage.php?wikiPageID=".$wikiPageID."");
+						//exit;
 
 					}
 
