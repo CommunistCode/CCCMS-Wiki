@@ -295,7 +295,8 @@
 				// Write full image
 				$imageJiggle->setDimensions(690,490);
 				$imageJiggle->write("wikiUserImages/full/",$uniqueID, 90);
-				
+			
+				$mimeType = $imageJiggle->getMimeType();
 
 			} catch (Exception $e) {
 
