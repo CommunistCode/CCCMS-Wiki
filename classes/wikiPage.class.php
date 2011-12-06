@@ -95,7 +95,7 @@
 
 			$result = $db->mysqli->query($query);
 
-			if (!$result->num_rows) {
+			if (!isset($result->num_rows)) {
 
 				return "No images have been added!";
 
