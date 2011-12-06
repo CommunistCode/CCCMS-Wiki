@@ -93,27 +93,27 @@
 
 			$db = new dbConn();
 
-			$result = $db->mysqli->query($query);
+			if ($result = $db->mysqli->query($query)) {
 
-			if (!isset($result->num_rows)) {
+				for ($i=0; $i<$result->num_rows; $i++) {
+
+					$row = $result->fetch_assoc();
+
+					$imageArray[$i]['imageID'] = $row['imageID'];
+					$imageArray[$i]['type'] = $row['type'];
+					$imageArray[$i]['caption'] = $row['caption'];
+					$imageArray[$i]['date'] = $row['date'];
+					$imageArray[$i]['memberID'] = $row['memberID'];
+
+				}
+
+				return $imageArray;
+
+			} else {
 
 				return "No images have been added!";
 
 			}
-
-			for ($i=0; $i<$result->num_rows; $i++) {
-
-				$row = $result->fetch_assoc();
-
-				$imageArray[$i]['imageID'] = $row['imageID'];
-				$imageArray[$i]['type'] = $row['type'];
-				$imageArray[$i]['caption'] = $row['caption'];
-				$imageArray[$i]['date'] = $row['date'];
-				$imageArray[$i]['memberID'] = $row['memberID'];
-
-			}
-
-			return $imageArray;
 
 		}
 
