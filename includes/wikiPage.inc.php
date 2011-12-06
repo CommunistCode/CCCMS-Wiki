@@ -24,9 +24,10 @@
 																							$_POST['definitionID'],
 																							$_FILES['newImage']['tmp_name'],
 																							$_POST['imageCaption']);
-
-						//header("Location: wikiPage.php?wikiPageID=".$wikiPageID."");
-						//exit;
+						
+						ob_start();
+						header("Location: wikiPage.php?wikiPageID=".$wikiPageID."");
+						ob_end_flush();
 
 					}
 
