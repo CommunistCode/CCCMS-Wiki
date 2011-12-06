@@ -82,7 +82,7 @@
 		function getImages($definitionID) {
 
 			$query = "SELECT  
-									* 
+									imageID, type, caption, date, memberID  
 								FROM 
 									wiki_pageImages 
 								WHERE 
@@ -93,7 +93,11 @@
 
 			$db = new dbConn();
 
-			if ($result = $db->mysqli->query($query)) {
+			$result = $db->mysqli->query($query); 
+			
+			if ($result->num_rows != 0) {
+
+				$imageArray = array();
 
 				for ($i=0; $i<$result->num_rows; $i++) {
 
@@ -111,7 +115,7 @@
 
 			} else {
 
-				return "No images have been added!";
+				return "No images have been added yet!";
 
 			}
 
