@@ -258,13 +258,13 @@
 			$time = time();
 			$member = unserialize($_SESSION['member']);
 
-			if ($imageInfo = getimagesize($tmpImageLocation)) {
+			try {
+				
+				$imageJiggle = new imageJiggle($tmpImageLocation);
 
-				if ($imageInfo['mime'] != "image/jpeg") {
+			} catch (Exception $e) {
 
-					return "Image type was not JPEG!";
-
-				}
+				die($e->getMessage());
 
 			}
 
@@ -286,7 +286,22 @@
 
 			$path = "wikiUserImages/".$uniqueID.".jpg";
 
-			move_uploaded_file($tmpImageLocation, $path);
+			try {
+			
+				// Write thumbnail
+				$imageJiggle->setDimensions(155,140);
+				$imageJiggle->write("wikiUserImages/thumbs/",$uniqueID, 75);
+
+				// Write full image
+				$imageJiggle->setDimensions(690,490);
+				$imageJiggle->write("wikiUserImages/full/",$uniqueID, 90);
+				
+
+			} catch (Exception $e) {
+
+				die($e->getMessage());
+
+			}
 
 			$db->update("wiki_pageImages","type='".$imageInfo['mime']."'","imageID=".$uniqueID);
 

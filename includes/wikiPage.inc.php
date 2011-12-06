@@ -18,6 +18,8 @@
 
 					if (isset($_POST['imageCaption'])) {
 
+						require_once($fullPath."/helperClasses/imageJiggle/imageJiggle.class.php");
+
 						$status = $wikiTools->insertImage($wikiPage->getID(),
 																							$_POST['definitionID'],
 																							$_FILES['newImage']['tmp_name'],
@@ -99,7 +101,7 @@
 
 						foreach ($imageArray as $image) {
 
-							$wikiContent .= "<div class='imageThumbContainer'><a href='viewImage.php?imageID=".$image['imageID']."'><img class='wikiImage' src='wikiUserImages/".$image['imageID'].".jpg' /></a></div>";
+							$wikiContent .= "<div class='imageThumbContainer'><a href='viewImage.php?imageID=".$image['imageID']."'><img class='wikiImage' src='wikiUserImages/thumbs/".$image['imageID'].".jpg' /></a></div>";
 
 						}
 
