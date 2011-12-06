@@ -304,7 +304,7 @@
 
 			}
 
-			$db->update("wiki_pageImages","type='".$imageInfo['mime']."'","imageID=".$uniqueID);
+			$db->update("wiki_pageImages","type='".$mimeType."'","imageID=".$uniqueID);
 
 		}
 
