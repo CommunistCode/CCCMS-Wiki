@@ -6,7 +6,8 @@
 
 	} else if (isset($_GET['wikiPageID'])) {
 
-		$categoryID = $wikiPage->getCategoryID();
+		$categoryArray = $wikiPage->getCategoryArray();
+    $categoryID = $categoryArray[0];
 
 	} else if (isset($_POST['pageCategory'])) {
 
@@ -18,15 +19,15 @@
 
 	}
 	
-	$categoryBarArray[0] = $categoryID;
+	$categoryBarArray[0] = $categoryID[0];
 
 	$i = 0;
 
-	while ($wikiTools->getCategoryParentID($categoryID) != 0) {
+	while ($wikiTools->getCategoryParentID($categoryID[0]) != 0) {
 		
 		$i++;
 	
-		$parentCategory = $wikiTools->getCategoryParentID($categoryID);;
+		$parentCategory = $wikiTools->getCategoryParentID($categoryID[0]);;
 		
 		$categoryBarArray[$i] = $parentCategory;
 		$categoryID = $parentCategory;
@@ -69,7 +70,7 @@
 
 			}
 
-			if (isset($_GET['wikiPageID'])) {
+			if (isset($_GET['wikiPageID']) || isset($_POST['doCreatePage'])) {
 
 				if (isset($_POST['viewHistory'])) {
 

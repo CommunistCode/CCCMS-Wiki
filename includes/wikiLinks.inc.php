@@ -10,7 +10,8 @@
 
 	} else if (isset($_GET['wikiPageID'])) {
 
-		$categoryID = $wikiPage->getCategoryID();
+		$categoryArray = $wikiPage->getCategoryArray();
+    $categoryID = $categoryArray[0];
 
 	} else {
 
@@ -20,8 +21,8 @@
 
 	$topDiv = "TopDiv";
 
-	// Get the category information
-	$categoryArray = $wikiTools->getCategoryList($categoryID);
+	// Get the sub category information
+	$subCategoryArray = $wikiTools->getCategoryList($categoryID);
 
 	// Hide parent category link if there is no parent category
 	if ($categoryID != 0) {
@@ -67,7 +68,7 @@
 	}
 
 	// Check if there are any sub-categories returned
-	if (isset($categoryArray)) {
+	if (isset($subCategoryArray)) {
 
 		if ($categoryID != 0) {
 			
@@ -84,7 +85,7 @@
 	
 		echo("<ul>");
 
-		foreach ($categoryArray as $category) {
+		foreach ($subCategoryArray as $category) {
 
 			echo("<li><a href='index.php?categoryID=".$category['wikiCategoryID']."'>".$category['name']."</a> ");
 			echo("(".$wikiTools->countPagesInCategoryRecurring($category['wikiCategoryID']).")</li>");

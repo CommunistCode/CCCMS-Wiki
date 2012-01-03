@@ -32,7 +32,7 @@
 	<br /><br />
 
 	<label for='pageCategory'>Page Category:</label>
-	<select name='pageCategory'>
+	<select name='pageCategory[]'>
 
 		<?php
 

@@ -7,7 +7,7 @@
 		var $wikiPageArray;
 		var $id;
 		var $title;
-		var $categoryID;
+		var $categoryArray;
 		var $templateID;
 
 		public function wikiPage($id) {
@@ -16,14 +16,21 @@
 
 			$db = new dbConn();
 
-			$query = "SELECT wikiCategoryID, wikiTemplateID,title from wiki_pages WHERE wikiPageID='".$id."'";
+			$query = "SELECT wikiTemplateID,title from wiki_pages WHERE wikiPageID='".$this->id."'";
 
 			$result = $db->mysqli->query($query);
 			$data = $result->fetch_assoc();
 
 			$this->templateID = $data['wikiTemplateID'];
 			$this->title = $data['title'];
-			$this->categoryID = $data['wikiCategoryID'];
+
+      $result = $db->selectWhere("wikiCategoryID","wiki_pageCategories","wikiPageID=".$this->id."");
+
+      foreach($result->fetch_assoc() as $row) {
+
+        $this->categoryArray[] = $row['wikiCategoryID'];
+
+      }
 
 			$query = "SELECT 
 									wpc.content,
@@ -133,9 +140,9 @@
 
 		}
 
-		public function getCategoryID() {
+		public function getCategoryArray() {
 
-			return $this->categoryID;
+			return $this->categoryArray;
 
 		}
 

@@ -14,7 +14,7 @@
 
 			}
 			
-			$countResult = $db->selectWhere("COUNT(wikiPageID) as count","wiki_pages","wikiCategoryID=".$categoryID);
+			$countResult = $db->selectWhere("COUNT(wikiPageID) as count","wiki_pageCategories","wikiCategoryID=".$categoryID);
 
 			if (isset($countResult)) {
 
@@ -58,13 +58,15 @@
 									wp.title,
 									wp.wikiPageID
 								FROM
+                  wiki_pageCategories wpcat
+                NATURAL JOIN 
 									wiki_pages wp
 								LEFT JOIN
-									wiki_pageContents wpc
+									wiki_pageContents wpcon
 								ON
-									wp.wikiPageID = wpc.wikiPageID
+									wp.wikiPageID = wpcon.wikiPageID
 								WHERE
-									wp.wikiCategoryID = ".$id." 
+									wpcat.wikiCategoryID = ".$id."
 								ORDER BY
 									wp.title 
 								ASC
@@ -308,20 +310,35 @@
 
 		}
 
-		public function createPage($title,$template,$category) {
+		public function createPage($title,$template,$categoryArray) {
 
 			$db = new dbConn();
 
 			$db->insert("wiki_pages",
 									"wikiTemplateID,
-									 wikiCategoryID,
 									 title",
-									 $template.","
-									 .$category.",
-									 '".$title."'"
+									 $template.",
+                   '".$title."'"
 									);
 
-			return $db->mysqli->insert_id;
+			$id = $db->mysqli->insert_id;
+
+      if (gettype($categoryArray) != "array") {
+
+        $categoryID = $categoryArray;
+        unset($categoryArray);
+        $categoryArray = array();
+        $categoryArray[] = $categoryID;
+
+      }
+
+      foreach($categoryArray as $category) {
+
+        $db->insert("wiki_pageCategories","wikiPageID,wikiCategoryID",$id.",".$category);
+
+      }
+
+      return $id;
 
 		}
 
