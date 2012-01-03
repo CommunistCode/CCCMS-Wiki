@@ -5,14 +5,13 @@
 
 ?>
 
-<br />
 
 <form action='wikiPage.php' method='post'>
 
 	<label for='pageTitle'>Page Title:</label>
 	<input type='text' name='pageTitle'>
 
-	<br />
+	<br /><br />
 
 	<label for='pageTemplate'>Page Template:</label>
 	<select name='pageTemplate'>
