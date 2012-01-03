@@ -15,3 +15,6 @@
 	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");
 
 ?>
+
+<script type="text/javascript" src="scripts/wikiCreatePage.js"></script>
+

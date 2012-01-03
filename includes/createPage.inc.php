@@ -30,20 +30,22 @@
 	</select>
 
 	<br /><br />
+  
+  <table id='categoryTable'>
 
-	<label for='pageCategory'>Page Category:</label>
-	<select name='pageCategory[]'>
-
-		<?php
-
-			$wikiTools->renderCategorySelectOptions();
-
-		?>
-
-	</select>
+  	<tr>
+      <th>Page Category:</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td><select id='categoryList' name='pageCategory[]'> <?php $wikiTools->renderCategorySelectOptions();	?> </select></td>
+      <td></td>
+    </tr>  
+  </table>
 
 	<br /><br />
 
+  <input class='highlightHover' type='button' value='Add Another Category' onclick="addCategoryRow()" />
 	<input class='highlightHover' type='submit' value='Create Page' name='doCreatePage' />
 
 </form>
