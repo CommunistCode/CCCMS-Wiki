@@ -12,7 +12,7 @@
 	<label for='pageTitle'>Page Title:</label>
 	<input type='text' name='pageTitle'>
 
-	<br /><br />
+	<br />
 
 	<label for='pageTemplate'>Page Template:</label>
 	<select name='pageTemplate'>
@@ -43,7 +43,7 @@
     </tr>  
   </table>
 
-	<br /><br />
+  <br />
 
   <input class='highlightHover' type='button' value='Add Another Category' onclick="addCategoryRow()" />
 	<input class='highlightHover' type='submit' value='Create Page' name='doCreatePage' />
