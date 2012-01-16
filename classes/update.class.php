@@ -166,7 +166,7 @@
 
 			if (!$error) {
 
-				if ($db->updateVersion($module,$version)) {
+				if ($db->updateVersion($this->module,$version)) {
 
 					echo("<strong>Updated to ".$version."</strong><br />");
 					return 1;
