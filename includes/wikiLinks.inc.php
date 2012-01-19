@@ -109,9 +109,9 @@
 			$popularPageTitle = $popularPage['title'];
 			$popularPageTitleOrig = $popularPage['title'];
 
-			if (strlen($popularPageTitle) > 15) {
+			if (strlen($popularPageTitle) > 10) {
 
-				$popularPageTitle = substr($popularPageTitle,0,15)."&hellip;";
+				$popularPageTitle = substr($popularPageTitle,0,10)."&hellip;";
 
 			}
 
