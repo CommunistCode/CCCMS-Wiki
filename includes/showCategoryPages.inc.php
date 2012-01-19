@@ -31,7 +31,7 @@
 
 			if ($subCategories = $wikiTools->getCategoryList($categoryID)) {
 
-				echo("<div class='subCategoryPages'>");
+				echo("<br /><div class='subCategoryPages'>");
 				echo("<h4>Sub Category Pages</h4>");
 
 				foreach($subCategories as $subCategory) {
