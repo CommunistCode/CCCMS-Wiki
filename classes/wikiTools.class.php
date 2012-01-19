@@ -1,5 +1,7 @@
 <?php
 
+  require_once($fullPath."/classes/dbConn.class.php");
+
 	class wikiTools {
 
 		public function countPagesInCategoryRecurring($categoryID, $runningTotal = 0) {
