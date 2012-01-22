@@ -1,27 +1,45 @@
 <?php
 
   require_once($fullPath."/classes/dbConn.class.php");
+  require_once($fullPath."/classes/pdoConn.class.php");
 
 	class wikiTools {
 
+    private $pdoConn;
+
+    function __construct() {
+
+      $this->pdoConn = new pdoConn();
+
+    }
+
 		public function countPagesInCategoryRecurring($categoryID, $runningTotal = 0) {
 
-			$db = new dbConn();
+      $field = "wikiCategoryID";
+      $table = "wiki_categories";
 
-			$result = $db->selectWhere("wikiCategoryID","wiki_categories","parentCategoryID=".$categoryID);
+      $where[0]['column'] = "parentCategoryID";
+      $where[0]['value'] = $categoryID;
 
-			while ($data = $result->fetch_assoc()) {
+			$result = $this->pdoConn->select($field,$table,$where);
+
+      foreach($result as $data) {
 
 				$runningTotal = $this->countPagesInCategoryRecurring($data['wikiCategoryID'], $runningTotal);
 
 			}
 			
-			$countResult = $db->selectWhere("COUNT(wikiPageID) as count","wiki_pageCategories","wikiCategoryID=".$categoryID);
+      $field = "COUNT(wikiPageID) as count";
+      $table = "wiki_pageCategories";
 
-			if (isset($countResult)) {
+      $where[0]['column'] = "wikiCategoryID";
+      $where[0]['value'] = $categoryID;
 
-				$thisCount = $countResult->fetch_assoc();
-				$runningTotal = $runningTotal + $thisCount['count'];
+			$countResult = $this->pdoConn->select($field,$table,$where);
+
+			if (count($countResult) > 0) {
+
+				$runningTotal = $runningTotal + $countResult[0]['count'];
 
 			}
 
@@ -31,13 +49,22 @@
 		
 		public function getHistory($wikiPageID,$definitionID) {
 
-			$db = new dbConn();
+      $fields = array("date","content","memberID","isCurrent");
+      $table = "wiki_pageContents";
 
-			$result = $db->selectWhere("date,content,memberID,isCurrent","wiki_pageContents","wikiTemplateDefinitionID=".$definitionID." AND wikiPageID=".$wikiPageID." ORDER BY date ASC");
+      $where[0]['column'] = "wikiTemplateDefinitionID";
+      $where[0]['value'] = $definitionID;
+
+      $where[1]['column'] = "wikiPageID";
+      $where[1]['value'] = $wikiPageID;
+
+      $orderBy = "date DESC";
+    
+			$result = $this->pdoConn->select($fields,$table,$where,$orderBy);
 
 			$i=0;
 
-			while ($row=$result->fetch_assoc()) {
+      foreach($result as $row) {
 
 				$historyArray[$i]['date'] = $row['date'];
 				$historyArray[$i]['content'] = $row['content'];
@@ -103,15 +130,17 @@
 		
 		public function getCategoryParentID($id) {
 
-			$db = new dbConn();
+      $field = "parentCategoryID";
+      $table = "wiki_categories";
 
-			$result = $db->selectWhere("parentCategoryID","wiki_categories","wikiCategoryID=".$id);
+      $where[0]['column'] = "wikiCategoryID";
+      $where[0]['value'] = $id;
 
-			if ($result->num_rows>0) {
+			$result = $this->pdoConn->select($field,$table,$where);
+			
+      if (count($result)>0) {
 				
-				$categoryArray = $result->fetch_assoc();
-
-				return $categoryArray['parentCategoryID'];
+				return $result[0]['parentCategoryID'];
 
 			} else {
 
@@ -123,15 +152,17 @@
 
 		public function getCategoryName($id) {
 
-			$db = new dbConn();
+      $field = "name";
+      $table = "wiki_categories";
 
-			$result = $db->selectWhere("name","wiki_categories","wikiCategoryID=".$id);
+      $where[0]['column'] = "wikiCategoryID";
+      $where[0]['value'] = $id;
 
-			if ($result->num_rows>0) {
+			$result = $this->pdoConn->select($field,$table,$where);
+
+			if (count($result)>0) {
 				
-				$categoryArray = $result->fetch_assoc();
-
-				return $categoryArray['name'];
+				return $result[0]['name'];
 
 			}
 
@@ -139,13 +170,17 @@
 
 		public function getCategoryList($parentCategoryID) {
 
-			$db = new dbConn();
+      $fields = array("name","wikiCategoryID");
+      $table = "wiki_categories";
 
-			$result = $db->selectWhere("name,wikiCategoryID","wiki_categories","parentCategoryID=".$parentCategoryID);
+      $where[0]['column'] = "parentCategoryID";
+      $where[0]['value'] = $parentCategoryID;
 
-			$i = 0;
+			$result = $this->pdoConn->select($fields,$table,$where);
+      
+      $i = 0;
 
-			while ($row = $result->fetch_assoc()) {
+      foreach($result as $row) {
 				
 				$categoryArray[$i]['name'] = $row['name'];
 				$categoryArray[$i]['wikiCategoryID'] = $row['wikiCategoryID'];
@@ -164,11 +199,17 @@
 
 		public function sortCategories($sortedArray, $currentCategory = 0, $level = 0) {
 
-      $db = new dbConn();
+      $fields = array("wikiCategoryID","name","parentCategoryID");
+      $table = "wiki_categories";
 
-      if ($result = $db->selectWhere("wikiCategoryID,name,parentCategoryID","wiki_categories","parentCategoryID=".$currentCategory)) {
+      $where[0]['column'] = "parentCategoryID";
+      $where[0]['value'] = $currentCategory;
 
-        while ($category=$result->fetch_assoc()) {
+      $result = $this->pdoConn->select($fields,$table,$where);
+      
+      if (count($result) > 0) {
+
+        foreach($result as $category) {
 
           $arraySize = count($sortedArray);
 
@@ -242,14 +283,27 @@
 									 ".$member->getID()."")) {
 
 
-				$db->update("wiki_pageContents","isCurrent=0","isCurrent=1 AND wikiPageID=".$pageID." AND wikiTemplateDefinitionID=".$definitionID." AND date != ".$time);
+        $table = "wiki_pageContents";
+        
+        $set[0]['column'] = "isCurrent";
+        $set[0]['value'] = 0;
 
-			} else {
+        $where[0]['column'] = "wikiPageID";
+        $where[0]['value'] = $pageID;
 
-				 echo($db->mysqli->error);
+        $where[1]['column'] ="isCurrent";
+        $where[1]['value'] = 1;
+
+        $where[2]['column'] = "wikiTemplateDefinitionID";
+        $where[2]['value'] = $definitionID;
+
+        $where[3]['column'] = "date";
+        $where[3]['operator'] = "!=";
+        $where[3]['value'] = $time;
+
+				$this->pdoConn->update($table,$set,$where);
 
 			}
-
 
 		}
 
@@ -308,7 +362,15 @@
 
 			}
 
-			$db->update("wiki_pageImages","type='".$mimeType."'","imageID=".$uniqueID);
+      $table = "wiki_pageImages";
+      
+      $set[0]['column'] = "type";
+      $set[0]['value'] = $mimeType;
+
+      $where[0]['column'] = "imageID";
+      $where[0]['value'] = $uniqueID;
+
+			$this->pdoConn->update($table,$set,$where);
 
 		}
 
@@ -346,9 +408,10 @@
 
 		public function getAllTemplates() {
 
-			$db = new dbConn();
+      $fields = array("wikiTemplateID","name");
+      $table = "wiki_templates";
 
-			$result = $db->select("wikiTemplateID,name","wiki_templates");
+			$result = $this->pdoConn->select($fields,$table);
 
 			for ($i=0; $i<$result->num_rows; $i++) {
 
@@ -424,17 +487,15 @@
 
 		function getImageDetails($imageID) {
 
-			$db = new dbConn();
+      $fields = array("wikiPageID","wikiTemplateDefinitionID","caption","date","memberID");
+      $table = "wiki_pageImages";
 
-			$result = $db->selectWhere("wikiPageID, 
-																	wikiTemplateDefinitionID, 
-																	caption, 
-																	date, 
-																	memberID",
-																 "wiki_pageImages",
-																 "imageID=".$imageID);
+      $where[0]['column'] = "imageID";
+      $where[0]['value'] = $imageID;
 
-			$image = $result->fetch_assoc();
+			$result = $this->pdoConn->select($fields,$table,$where);
+
+			$image = array_shift($result);
 
 			$imageDetails['wikiPageID'] = $image['wikiPageID'];
 			$imageDetails['wikiTemplateDefinitionID'] = $image['wikiTemplateDefinitionID'];
@@ -442,11 +503,22 @@
 			$imageDetails['date'] = $image['date'];
 			$imageDetails['memberID'] = $image['memberID'];
 
-			$result = $db->selectWhere("*","wiki_pageImages","wikiPageID=".$image['wikiPageID']." AND wikiTemplateDefinitionID=".$image['wikiTemplateDefinitionID']." ORDER BY date ASC");
+      $field = "*";
+      $table = "wiki_pageImages";
+
+      $where[0]['column'] = "wikiPageID";
+      $where[0]['value'] = $image['wikiPageID'];
+
+      $where[1]['column'] = "wikiTemplateDefinitionID";
+      $where[1]['value'] = $image['wikiTemplateDefinitionID'];
+
+      $orderBy = "date ASC";
+
+			$result = $this->pdoConn->select($field,$table,$where,$orderBy);
 
 			$imageSetArray = array();
 
-			while ($image = $result->fetch_assoc()) {
+      foreach($result as $image) {
 
 				array_push($imageSetArray, $image);
 
@@ -478,13 +550,15 @@
 
 		function getWikiTitle($wikiID) {
 
-			$db = new dbConn();
+      $field = "title";
+      $table = "wiki_pages";
 
-			$result = $db->selectWhere("title","wiki_pages","wikiPageID=".$wikiID);
+      $where[0]['column'] = "wikiPageID";
+      $where[0]['value'] = $wikiID;
 
-			$data = $result->fetch_assoc();
+			$result = $this->pdoConn->select($field, $table, $where);
 
-			return $data['title'];
+			return $result[0]['title'];
 
 		}
 		
