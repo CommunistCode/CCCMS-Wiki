@@ -29,40 +29,41 @@
 				</div>
 			
 				<div class="wikiBody">
-		
-			  <?php
+	
+	  			<div class='pageHeading'>
 
-					echo("<div class='pageHeading'>");
-					echo("<h1>".$heading."</h1>");
-					echo("</div>");
-					
-					if (!isset($disableWikiCategoryBar)) {
-						
-						require_once("includes/wikiCategoryBar.inc.php");
-
-					}
-
-					if (isset($help)) {
-						
-						echo("<div class='help'>".$help."</div>");
-
-					}
-
-					if (isset($content)) {
-
-						echo($content);
-
-					}
-
-          if (isset($include)) {
-
-						include($include);
-
-					}
-
-        ?>
-
+            <h1><?php echo($heading); ?></h1>
 				
+          </div>
+					
+			    <?php
+				
+            if (!isset($disableWikiCategoryBar)) {
+						
+						  require_once("includes/wikiCategoryBar.inc.php");
+
+  					}
+
+	  				if (isset($help)) {
+						
+		  				echo("<div class='help'>".$help."</div>");
+
+			  		}
+
+				  	if (isset($content)) {
+
+					  	echo($content);
+
+  					}
+
+            if (isset($include)) {
+
+		  				include($include);
+
+			  		}
+
+          ?>
+
 				</div>
 
 			</div>
