@@ -413,9 +413,10 @@
 
 			$result = $this->pdoConn->select($fields,$table);
 
-			for ($i=0; $i<$result->num_rows; $i++) {
+			for ($i=0; $i<count($result); $i++) {
 
-				$templateArray[$i] = $result->fetch_assoc();
+        $resultRow = array_shift($result);
+				$templateArray[$i] = $resultRow;
 
 			}
 
