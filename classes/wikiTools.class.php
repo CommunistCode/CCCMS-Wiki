@@ -2,50 +2,61 @@
 
   require_once($fullPath."/classes/dbConn.class.php");
   require_once($fullPath."/classes/pdoConn.class.php");
+  require_once($fullPath."/helperClasses/categoryManager/categoryManager.class.php");
 
 	class wikiTools {
 
     private $pdoConn;
+    private $cM;
 
     function __construct() {
 
       $this->pdoConn = new pdoConn();
 
-    }
-
-		public function countPagesInCategoryRecurring($categoryID, $runningTotal = 0) {
-
-      $field = "wikiCategoryID";
+      $fields = array("wikiCategoryID","name","parentCategoryID");      
       $table = "wiki_categories";
 
-      $where[0]['column'] = "parentCategoryID";
-      $where[0]['value'] = $categoryID;
+      $result = $this->pdoConn->select($fields,$table);
+      
+      $this->cM = new categoryManager($result,"wikiCategoryID","parentCategoryID","name");
 
-			$result = $this->pdoConn->select($field,$table,$where);
+    }
 
-      foreach($result as $data) {
+    public function getCategoryParentID($id) {
 
-				$runningTotal = $this->countPagesInCategoryRecurring($data['wikiCategoryID'], $runningTotal);
+      return $this->cM->getCategoryParentID($id);
 
-			}
-			
+    }
+
+    public function countPagesInCategoryRecurring($categoryID) {
+
+      $childCategoryArray = $this->cM->getChildCategoriesRecurring($categoryID);
+
       $field = "COUNT(wikiPageID) as count";
       $table = "wiki_pageCategories";
 
-      $where[0]['column'] = "wikiCategoryID";
-      $where[0]['value'] = $categoryID;
+      $i = 0;
 
-			$countResult = $this->pdoConn->select($field,$table,$where);
+      foreach ($childCategoryArray as $childCategoryID) {
+      
+        $where[$i]['joinOperator'] = "OR";
+        $where[$i]['column'] = "wikiCategoryID";
+        $where[$i]['value'] = $childCategoryID;
 
-			if (count($countResult) > 0) {
+        $i++;
 
-				$runningTotal = $runningTotal + $countResult[0]['count'];
+      }
+ 
+      $where[$i]['joinOperator'] = "OR";
+      $where[$i]['column'] = "wikiCategoryID";
+      $where[$i]['value'] = $categoryID;
+ 
+      $countResult = $this->pdoConn->select($field,$table,$where);
 
-			}
+      return $countResult[0]['count'];
+      
 
-			return $runningTotal;
-
-		}
+    }
 		
 		public function getHistory($wikiPageID,$definitionID) {
 
@@ -128,111 +139,21 @@
 
 		}
 		
-		public function getCategoryParentID($id) {
-
-      $field = "parentCategoryID";
-      $table = "wiki_categories";
-
-      $where[0]['column'] = "wikiCategoryID";
-      $where[0]['value'] = $id;
-
-			$result = $this->pdoConn->select($field,$table,$where);
-			
-      if (count($result)>0) {
-				
-				return $result[0]['parentCategoryID'];
-
-			} else {
-
-				return 0;
-
-			}
-
-		}
-
 		public function getCategoryName($id) {
 
-      $field = "name";
-      $table = "wiki_categories";
-
-      $where[0]['column'] = "wikiCategoryID";
-      $where[0]['value'] = $id;
-
-			$result = $this->pdoConn->select($field,$table,$where);
-
-			if (count($result)>0) {
-				
-				return $result[0]['name'];
-
-			}
+      return $this->cM->getCategoryName($id);    
 
 		}
 
 		public function getCategoryList($parentCategoryID) {
 
-      $fields = array("name","wikiCategoryID");
-      $table = "wiki_categories";
-
-      $where[0]['column'] = "parentCategoryID";
-      $where[0]['value'] = $parentCategoryID;
-
-			$result = $this->pdoConn->select($fields,$table,$where);
-      
-      $i = 0;
-
-      foreach($result as $row) {
-				
-				$categoryArray[$i]['name'] = $row['name'];
-				$categoryArray[$i]['wikiCategoryID'] = $row['wikiCategoryID'];
-
-				$i++;
-
-			}
-
-			if (isset($categoryArray)) {
-	
-				return $categoryArray;
-
-			}
-
+      return $this->cM->getChildCategories($parentCategoryID);
+     
 		}
-
-		public function sortCategories($sortedArray, $currentCategory = 0, $level = 0) {
-
-      $fields = array("wikiCategoryID","name","parentCategoryID");
-      $table = "wiki_categories";
-
-      $where[0]['column'] = "parentCategoryID";
-      $where[0]['value'] = $currentCategory;
-
-      $result = $this->pdoConn->select($fields,$table,$where);
-      
-      if (count($result) > 0) {
-
-        foreach($result as $category) {
-
-          $arraySize = count($sortedArray);
-
-          $sortedArray[$arraySize]['categoryName'] = $category['name'];
-					$sortedArray[$arraySize]['wikiCategoryID'] = $category['wikiCategoryID'];
-          $sortedArray[$arraySize]['level'] = $level;
-
-          $sortedArray = $this->sortCategories($sortedArray,$category['wikiCategoryID'],($level+1));
-
-        }
-
-      }
-
-      return $sortedArray;
-
-    }
 
     public function getSortedCategories() {
 
-      $array = array();
-      $sortedCategories = $this->sortCategories($array);
-
-      return $sortedCategories;
+      return $this->cM->makeCategoryTreeArray();
 
     }
 
@@ -252,7 +173,7 @@
 
 				}
 
-				echo(" ".$category['categoryName']."</option>");
+				echo(" ".$category['name']."</option>");
 
 			}
 		}
@@ -374,6 +295,21 @@
 
 		}
 
+    public function deleteImage($imageID) {
+
+      // Very primitive image delete function
+
+      $db = new dbConn();
+
+      $db->delete("wiki_pageImages","imageID=".$imageID);
+
+      unlink("wikiUserImages/thumbs/".$imageID.".jpg");
+      unlink("wikiUserImages/full/".$imageID.".jpg");
+
+      return;
+
+    }
+
 		public function createPage($title,$template,$categoryArray) {
 
 			$db = new dbConn();
@@ -433,7 +369,7 @@
 			$treeArray[$i]['name'] = $this->getCategoryName($categoryID);
 			$treeArray[$i]['id'] = $categoryID;
 
-			while ($parentID = $this->getCategoryParentID($categoryID)) {
+			while ($parentID = $this->cM->getCategoryParentID($categoryID)) {
 
 				$i++;
 
@@ -443,8 +379,8 @@
 				$categoryID = $parentID;
 
 			}
-
-			$z = 0;
+		
+    	$z = 0;
 
 			for ($i = (count($treeArray)-1); $i>=0; $i--) {
 
