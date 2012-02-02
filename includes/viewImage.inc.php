@@ -7,22 +7,20 @@
 	$memberTools = new memberTools();
 
 	$imageDetailsArray = $wikiTools->getImageDetails($_GET['imageID']);
+
+  $delete = "";
   
   if (isset($_SESSION['member'])) {
     
     $member = unserialize($_SESSION['member']);
     $currentMemberID = $member->getID();
 
-  }
+    if ($imageDetailsArray['memberID'] == $currentMemberID) {
+  
+      $delete = "(<a href='deleteImage.php?imageID=".$_GET['imageID']."'>Delete</a>)";
 
-  if ($imageDetailsArray['memberID'] == $currentMemberID) {
-
-    $delete = "(<a href='deleteImage.php?imageID=".$_GET['imageID']."'>Delete</a>)";
-
-  } else {
-
-    $delete = "";
-
+    }
+ 
   }
 
 ?>

@@ -118,7 +118,7 @@
 
 			} else {
 
-				$wikiContent .= "<em>No information added yet!</em>";
+				$wikiContent .= "<em class='emptyText'>No information added yet!</em>";
 
 			}
 

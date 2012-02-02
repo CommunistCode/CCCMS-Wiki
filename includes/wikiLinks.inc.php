@@ -19,7 +19,7 @@
 
 	}
 
-	$topDiv = "TopDiv";
+	$topDiv = "linkHeaderTop";
 
 	// Get the sub category information
 	$subCategoryArray = $wikiTools->getCategoryList($categoryID);
@@ -27,7 +27,7 @@
 	// Hide parent category link if there is no parent category
 	if ($categoryID != 0) {
 		
-		echo("<div class='wikiLinkHeading".$topDiv."'>Category Tree</div>");
+		echo("<div class='linkHeader ".$topDiv."'>Category Tree</div>");
 		$topDiv = "";
 
 		//Make category tree here
@@ -80,7 +80,7 @@
 
 		}
 			
-		echo("<div class='wikiLinkHeading".$topDiv."'>".$categoryHeading."</div>");
+		echo("<div class='linkHeader ".$topDiv."'>".$categoryHeading."</div>");
 		$topDiv = "";
 	
 		echo("<ul>");
@@ -88,7 +88,7 @@
 		foreach ($subCategoryArray as $category) {
 
 			echo("<li><a href='index.php?categoryID=".$category['wikiCategoryID']."'>".$category['name']."</a> ");
-			echo("(".$wikiTools->countPagesInCategoryRecurring($category['wikiCategoryID']).")</li>");
+			echo("(".$wikiTools->countPagesInCategoryRecurring($category['wikiCategoryID']).")</span>");
 
 		}
 
@@ -100,7 +100,7 @@
 
 	if (isset($popularPageArray)) {
 
-		echo("<div class='wikiLinkHeading'>Popular Pages</div>");
+		echo("<div class='linkHeader'>Popular Pages</div>");
 
 		echo("<ul>");
 
@@ -109,9 +109,9 @@
 			$popularPageTitle = $popularPage['title'];
 			$popularPageTitleOrig = $popularPage['title'];
 
-			if (strlen($popularPageTitle) > 10) {
+			if (strlen($popularPageTitle) > 13) {
 
-				$popularPageTitle = substr($popularPageTitle,0,10)."&hellip;";
+				$popularPageTitle = substr($popularPageTitle,0,13)."&hellip;";
 
 			}
 
@@ -125,7 +125,7 @@
 
 ?>
 
-<div class='wikiLinkHeading'>Actions</div>
+<div class='linkHeader'>Actions</div>
 
 <ul>
 	<li><a href='createPage.php'>Create New Page</a></li>
