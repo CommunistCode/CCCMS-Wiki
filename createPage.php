@@ -4,7 +4,8 @@
 	require_once($fullPath."/classes/pageTools.class.php");
 	require_once($fullPath."/wiki/classes/wikiTools.class.php");
 	require_once($fullPath."/wiki/classes/wikiPage.class.php");
-	require_once($fullPath."/includes/global.inc.php");
+  require_once($fullPath."/includes/global.inc.php");
+  require_once($fullPath."/membership/includes/checkLogin.inc.php");
 
 	$pageTitle = "Create New Wiki Page";
 	$heading = "Create New Page";

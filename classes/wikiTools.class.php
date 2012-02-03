@@ -405,7 +405,7 @@
 
 				case "textarea":
 					
-					$inputElement = "<textarea rows='4' class='textInput' name='newContent' >".$wikiContent."</textarea>";
+					$inputElement = "<textarea rows='10' class='textInput' name='newContent' >".$wikiContent."</textarea>";
 					break;
 
 				case "image":

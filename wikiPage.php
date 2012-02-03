@@ -6,7 +6,7 @@
 	require_once($fullPath."/wiki/classes/wikiPage.class.php");
 	require_once($fullPath."/includes/global.inc.php");
 
-	if (isset($_POST['editContent']) OR isset($_POST['saveContent']) OR isset($_POST['viewHistory'])) {
+	if (isset($_POST['editContent']) OR isset($_POST['saveContent']) OR isset($_POST['viewHistory']) OR isset($_POST['doCreatePage'])) {
 
 		require_once($fullPath."/membership/classes/member.class.php");
 		require_once($fullPath."/membership/classes/memberTools.class.php");
