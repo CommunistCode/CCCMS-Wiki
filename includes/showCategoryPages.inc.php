@@ -9,7 +9,7 @@
 			$categoryID = $_GET['categoryID'];
 			$pageArray = $wikiTools->getCategoryPages($categoryID);
 
-			echo("<h3>".$wikiTools->getCategoryName($categoryID)." Pages: </h3>");
+			echo("<h3>".$wikiTools->getCategoryName($categoryID)." Pages: </h3><br />");
 	
 			if (isset($pageArray)) {
 
