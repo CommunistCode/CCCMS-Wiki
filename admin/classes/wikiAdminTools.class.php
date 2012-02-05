@@ -2,6 +2,25 @@
 
 	class wikiAdminTools {
 
+    private $pdoConn;
+
+    function __construct() {
+
+      $this->pdoConn = new pdoConn();
+
+    }
+
+    public function getAllTemplates() {
+
+      $fields = array("wikiTemplateID","name");
+      $table = "wiki_templates";
+
+      $result = $this->pdoConn->select($fields,$table);
+
+      return $result;
+
+    }
+
 		public function addCategory($categoryName,$parentID) {
 
 			$db = new dbConn();
