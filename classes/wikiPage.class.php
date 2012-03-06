@@ -1,7 +1,5 @@
 <?php
 
-	require_once($fullPath . "/classes/dbConn.class.php");
-
 	class wikiPage {
 
 		var $wikiPageArray;

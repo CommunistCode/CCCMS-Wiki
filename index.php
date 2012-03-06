@@ -1,22 +1,25 @@
 <?php
 
-	require_once("../config/config.php");
-	require_once($fullPath."/classes/pageTools.class.php");
-	require_once($fullPath."/wiki/classes/wikiTools.class.php");
-	require_once($fullPath."/includes/global.inc.php");
+	require_once("includes/wikiGlobal.inc.php");
 
-	$wikiTools = new wikiTools();
+  $page->set("title","Wiki");
+  $page->set("heading","Wiki");
 
-	$pageTitle = "Wiki Home";
-	$heading = "Wiki";
-	$include = "includes/showCategoryPages.inc.php";
-
-	if (!isset($_GET['categoryID']) || $_GET['categoryID'] == 0) {
+  $disableWikiCategoryBar = false;
+	
+  if (!isset($_GET['categoryID']) || $_GET['categoryID'] == 0) {
 
 		$disableWikiCategoryBar = true;
 
 	}
 
-	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");
+  $page->addInclude("includes/showCategoryPages.inc.php",
+                    array(
+                      "wikiTools"=>$wikiTools,
+                      "pageTools"=>$pageTools,
+                    ));
+
+  $page->set("disableWikiCategoryBar",$disableWikiCategoryBar);
+  $page->render("corePage.inc.php");
 
 ?>

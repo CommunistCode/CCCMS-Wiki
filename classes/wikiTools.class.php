@@ -1,8 +1,6 @@
 <?php
 
-  require_once($fullPath."/classes/dbConn.class.php");
-  require_once($fullPath."/classes/pdoConn.class.php");
-  require_once($fullPath."/helperClasses/categoryManager/categoryManager.class.php");
+  require_once(FULL_PATH."/helperClasses/categoryManager/categoryManager.class.php");
 
 	class wikiTools {
 
@@ -161,7 +159,7 @@
 		
 		public function renderCategorySelectOptions() {
 
-			$categoryArray = $this->getSortedCategories();
+			$categoryArray = $this->cM->makeCategoryTreeArray();
 
 			foreach($categoryArray as $category) {
 
@@ -360,38 +358,10 @@
 
 		}
 
-		public function getCategoryTree($categoryID) {
+		public function getCategoryPath($categoryID) {
 
-			$treeArray = array();
-
-			$i = 0;
-
-			$treeArray[$i]['name'] = $this->getCategoryName($categoryID);
-			$treeArray[$i]['id'] = $categoryID;
-
-			while ($parentID = $this->cM->getCategoryParentID($categoryID)) {
-
-				$i++;
-
-				$treeArray[$i]['name'] = $this->getCategoryName($parentID);
-				$treeArray[$i]['id'] = $parentID;
-
-				$categoryID = $parentID;
-
-			}
-		
-    	$z = 0;
-
-			for ($i = (count($treeArray)-1); $i>=0; $i--) {
-
-				$sortedTreeArray[$z]['name'] = $treeArray[$i]['name'];
-				$sortedTreeArray[$z]['id'] = $treeArray[$i]['id'];
-				$z++;
-
-			}
-
-			return $sortedTreeArray;
-
+      return $this->cM->getCategoryPath($categoryID);
+	
 		}
 
 		function generateInput($wikiContentType, $wikiContent) {

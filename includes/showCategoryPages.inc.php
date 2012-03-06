@@ -2,14 +2,12 @@
 
 	<?php
 
-		$wikiTools = new wikiTools();
-
 		if (isset($_GET['categoryID']) && $_GET['categoryID'] != 0) {
 
 			$categoryID = $_GET['categoryID'];
-			$pageArray = $wikiTools->getCategoryPages($categoryID);
+			$pageArray = $_wikiTools->getCategoryPages($categoryID);
 
-			echo("<h3>".$wikiTools->getCategoryName($categoryID)." Pages: </h3><br />");
+			echo("<h3>".$_wikiTools->getCategoryName($categoryID)." Pages: </h3><br />");
 	
 			if (isset($pageArray)) {
 
@@ -29,7 +27,7 @@
 
 			}
 
-			if ($subCategories = $wikiTools->getCategoryList($categoryID)) {
+			if ($subCategories = $_wikiTools->getCategoryList($categoryID)) {
 
 				echo("<br /><div class='subCategoryPages'>");
 				echo("<h4>Sub Category Pages</h4>");
@@ -38,7 +36,7 @@
 					
 					echo("<h4><a href='index.php?categoryID=".$subCategory['wikiCategoryID']."'>".$subCategory['name']."</a></h4>");
 
-					if ($pageArray = $wikiTools->getCategoryPages($subCategory['wikiCategoryID'])) {
+					if ($pageArray = $_wikiTools->getCategoryPages($subCategory['wikiCategoryID'])) {
 
 						echo("<ul>");
 						
@@ -66,9 +64,9 @@
 		} else {
 
 			$categoryID = 0;
-			$pageArray = $pageTools->getDynamicContent($pageTools->getPageIDbyDirectLink("wiki/index.php"));
+			$pageArray = $_pageTools->getDynamicContent($_pageTools->getPageIDbyDirectLink("wiki/index.php"));
 
-			echo($pageTools->matchTags($pageArray['text']));
+			echo($_pageTools->matchTags($pageArray['text']));
 
 		}
 

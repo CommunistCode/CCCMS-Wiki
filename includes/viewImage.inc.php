@@ -1,12 +1,11 @@
 <?php
 
-	require_once($fullPath . "/membership/classes/memberTools.class.php");
-	require_once($fullPath . "/membership/classes/member.class.php");
+	require_once(FULL_PATH."/".MEMBER_MODULE_DIR."/classes/memberTools.class.php");
+	require_once(FULL_PATH."/".MEMBER_MODULE_DIR."/classes/member.class.php");
 
-	$wikiTools = new wikiTools();
 	$memberTools = new memberTools();
 
-	$imageDetailsArray = $wikiTools->getImageDetails($_GET['imageID']);
+	$imageDetailsArray = $_wikiTools->getImageDetails($_GET['imageID']);
 
   $delete = "";
   
@@ -27,7 +26,7 @@
 
 <div class='wikiImageFullContainer'><img class='wikiImageFull' src='wikiUserImages/full/<?php echo($_GET['imageID']); ?>.jpg'></div>
 
-<?php echo("<p class='imageNo'>".$wikiTools->getWikiTitle($imageDetailsArray['wikiPageID'])." - Image (".($imageDetailsArray['imageIndex']+1)."/".$imageDetailsArray['noImagesInSet'].") - Uploaded by: ".$memberTools->getUsername($imageDetailsArray['memberID'])." ".$delete."</p>"); ?>
+<?php echo("<p class='imageNo'>".$_wikiTools->getWikiTitle($imageDetailsArray['wikiPageID'])." - Image (".($imageDetailsArray['imageIndex']+1)."/".$imageDetailsArray['noImagesInSet'].") - Uploaded by: ".$memberTools->getUsername($imageDetailsArray['memberID'])." ".$delete."</p>"); ?>
 
 <table class='fullImageLinkTable'>
 	<tr>

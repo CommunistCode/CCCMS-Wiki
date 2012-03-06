@@ -1,20 +1,14 @@
 <?php
 
-	require_once("../config/config.php");
-	require_once($fullPath."/classes/pageTools.class.php");
-	require_once($fullPath."/wiki/classes/wikiTools.class.php");
-	require_once($fullPath."/wiki/classes/wikiPage.class.php");
-	require_once($fullPath."/includes/global.inc.php");
+	require_once("includes/wikiGlobal.inc.php");
 
 	if (isset($_POST['editContent']) OR isset($_POST['saveContent']) OR isset($_POST['viewHistory']) OR isset($_POST['doCreatePage'])) {
 
-		require_once($fullPath."/membership/classes/member.class.php");
-		require_once($fullPath."/membership/classes/memberTools.class.php");
-		require_once($fullPath."/membership/includes/checkLogin.inc.php");
+		require_once(FULL_PATH."/".MEMBER_MODULE_DIR."/classes/member.class.php");
+		require_once(FULL_PATH."/".MEMBER_MODULE_DIR."/classes/memberTools.class.php");
+		require_once(FULL_PATH."/".MEMBER_MODULE_DIR."/includes/checkLogin.inc.php");
 
 	}
-
-	$wikiTools = new wikiTools();
 
 	if (isset($_GET['wikiPageID'])) {
 
@@ -29,6 +23,8 @@
 		$wikiPageID = 0;
 
 	}
+
+  define('WIKI_PAGE_ID',$wikiPageID);
 
 	$wikiPage = new wikiPage($wikiPageID);
 
@@ -45,8 +41,15 @@
 
 	}
 
-	$pageTitle = $heading;
+  $page->set("title",$heading);
+  $page->set("heading",$heading);
+  
+  $page->addInclude($include,
+                    array(
+                      "wikiPage"=>$wikiPage,
+                      "wikiTools"=>$wikiTools,
+                      "pageTools"=>$pageTools));
 
-	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");
+  $page->render("corePage.inc.php");
 
 ?>

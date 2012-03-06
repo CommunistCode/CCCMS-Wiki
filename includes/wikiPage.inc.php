@@ -1,6 +1,6 @@
 <?php
 
-	$wikiPageArray = $wikiPage->getWikiPageArray();
+	$wikiPageArray = $_wikiPage->getWikiPageArray();
 
 	foreach ($wikiPageArray as $contentPiece) {
 
@@ -18,29 +18,29 @@
 
 					if (isset($_POST['imageCaption'])) {
 
-						require_once($fullPath."/helperClasses/imageJiggle/imageJiggle.class.php");
+						require_once(FULL_PATH."/helperClasses/imageJiggle/imageJiggle.class.php");
 
-						$status = $wikiTools->insertImage($wikiPage->getID(),
+						$status = $_wikiTools->insertImage($_wikiPage->getID(),
 																							$_POST['definitionID'],
 																							$_FILES['newImage']['tmp_name'],
 																							$_POST['imageCaption']);
 						
 						ob_start();
-						header("Location: wikiPage.php?wikiPageID=".$wikiPageID."");
+						header("Location: wikiPage.php?wikiPageID=".$_wikiPage->getID()."");
 						ob_end_flush();
 
 					}
 
 				} else if (strcmp($_POST['newContent'],$contentPiece['content']) != 0) {
 
-					$wikiTools->insertContent($wikiPage->getID(),
-																		$wikiPage->getTemplateID(),
+					$wikiTools->insertContent($_wikiPage->getID(),
+																		$_wikiPage->getTemplateID(),
 																		$_POST['definitionID'],
 																		$_POST['newContent']);
 				
 					$contentPiece['content'] = $_POST['newContent'];
 
-					header("Location: wikiPage.php?wikiPageID=".$wikiPageID."");
+					header("Location: wikiPage.php?wikiPageID=".$_wikiPage->getID()."");
 					exit;
 
 				}
@@ -53,7 +53,7 @@
 		
 		$wikiContent .= "<div class='heading'><h3>".$contentPiece['heading']."</h3>";
 
-		$wikiContent .= "<form method='post' action='wikiPage.php?wikiPageID=".$wikiPageID."' enctype='multipart/form-data'>";
+		$wikiContent .= "<form method='post' action='wikiPage.php?wikiPageID=".$_wikiPage->getID()."' enctype='multipart/form-data'>";
 		$wikiContent .= "<input type='hidden' value='".$contentPiece['definitionID']."' name='definitionID' />";
 
 		if ($editMode == 1) {
@@ -86,17 +86,17 @@
 
 		if ($editMode == 1) {
 
-			$wikiContent .= $wikiTools->generateInput($contentPiece['dataType'], $contentPiece['content']);
+			$wikiContent .= $_wikiTools->generateInput($contentPiece['dataType'], $contentPiece['content']);
 			
 		} else {
 
 			if ($contentPiece['content'] != "") {
 
-				$wikiContent .= $pageTools->matchTags($contentPiece['content']);
+				$wikiContent .= $_pageTools->matchTags($contentPiece['content']);
 			
 			} else if ($contentPiece['dataType'] == "image") {
 
-				if ($imageArray = $wikiPage->getImages($contentPiece['definitionID'])) {
+				if ($imageArray = $_wikiPage->getImages($contentPiece['definitionID'])) {
 
 					if (getType($imageArray) == "array") {
 

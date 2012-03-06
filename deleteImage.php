@@ -1,17 +1,10 @@
 <?php
 
-	require_once("../config/config.php");
-	require_once($fullPath."/classes/pageTools.class.php");
-	require_once($fullPath."/wiki/classes/wikiTools.class.php");
-	require_once($fullPath."/includes/global.inc.php");
-  require_once($fullPath."/membership/classes/member.class.php");
+	require_once("includes/wikiGlobal.inc.php");
+  require_once(FULL_PATH."/".MEMBER_MODULE_DIR."/classes/member.class.php");
 
-	$wikiTools = new wikiTools();
-
-	$pageTitle = "Wiki : Delete Image";
-	$heading = "Delete Image";
-
-  $disableWikiCategoryBar = true;
+  $page->set("title","Delete Image");
+  $page->set("heading","Delete Image");
 
   if (isset($_SESSION['member'])) {
 
@@ -33,6 +26,8 @@
   
   }
 
-	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");
+  $page->addContent($content);
+  $page->set("disableWikiCategoryBar","true");
+  $page->render("corePage.inc.php");
 
 ?>

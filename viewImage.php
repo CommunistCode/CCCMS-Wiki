@@ -1,18 +1,14 @@
 <?php
 
-	require_once("../config/config.php");
-	require_once($fullPath."/classes/pageTools.class.php");
-	require_once($fullPath."/wiki/classes/wikiTools.class.php");
-	require_once($fullPath."/includes/global.inc.php");
+	require_once("includes/wikiGlobal.inc.php");
 
-	$wikiTools = new wikiTools();
+  $page->set("title","View Image");
+  $page->set("heading","View Image");
 
-	$pageTitle = "View Image";
-	$heading = "View Image";
-	$include = "includes/viewImage.inc.php";
+	$page->addInclude("includes/viewImage.inc.php",array("wikiTools"=>$wikiTools));
 
-	$disableWikiCategoryBar = true;
+	$page->set("disableWikiCategoryBar","true");
 
-	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");
+  $page->render("corePage.inc.php");
 
 ?>

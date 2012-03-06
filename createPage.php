@@ -1,19 +1,15 @@
 <?php
 
-	require_once("../config/config.php");
-	require_once($fullPath."/classes/pageTools.class.php");
-	require_once($fullPath."/wiki/classes/wikiTools.class.php");
-	require_once($fullPath."/wiki/classes/wikiPage.class.php");
-  require_once($fullPath."/includes/global.inc.php");
-  require_once($fullPath."/membership/includes/checkLogin.inc.php");
+  require_once("includes/wikiGlobal.inc.php");
+  require_once(FULL_PATH."/".MEMBER_MODULE_DIR."/includes/checkLogin.inc.php");
 
-	$pageTitle = "Create New Wiki Page";
-	$heading = "Create New Page";
-	$include = "includes/createPage.inc.php";
+  $page->set("title","Create New Page");
+  $page->set("heading","Create New Page");
 
-	$disableWikiCategoryBar = true;
+  $page->addInclude("includes/createPage.inc.php",
+                    array("disableWikiCategoryBar"=>"true"));
 
-	require_once($fullPath."/wiki/themes/".$pageTools->getTheme("wiki")."/templates/template.inc.php");
+  $page->render("corePage.inc.php");
 
 ?>
 

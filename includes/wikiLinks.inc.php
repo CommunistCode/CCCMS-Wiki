@@ -1,7 +1,12 @@
 <?php
+  
+  $wikiTools = new wikiTools();
 
-	// New wiki tools object
-	$wikiTools = new wikiTools();
+  if (defined('WIKI_PAGE_ID')) {
+
+    $wikiPage = new wikiPage(WIKI_PAGE_ID);
+
+  }
 
 	// Find out if and how the category ID is set
 	if (isset($_GET['categoryID'])) {
@@ -31,9 +36,8 @@
 		$topDiv = "";
 
 		//Make category tree here
-		$sortedCategoryTree = $wikiTools->getCategoryTree($categoryID);
+		$sortedCategoryTree = $wikiTools->getCategoryPath($categoryID);
 
-		$i = 0;
 		$currentCategory = false;
 
 		echo("<ul>");
@@ -42,17 +46,16 @@
 
 		foreach($sortedCategoryTree as $tree) {
 
-			$i++;
 			echo("<li>");
 
-			if (count($sortedCategoryTree) == ($i)) {
+			if (count($sortedCategoryTree) == $tree['level']) {
 
 				echo("<strong>");
 				$currentCategory = true;
 
 			}
 
-			echo(str_repeat("-",$i)." <a href='index.php?categoryID=".$tree['id']."'>".$tree['name']."</a> ");
+			echo(str_repeat("-",$tree['level'])." <a href='index.php?categoryID=".$tree['id']."'>".$tree['name']."</a> ");
 			echo("(".$wikiTools->countPagesInCategoryRecurring($tree['id']).")");
 
 			if ($currentCategory) {
