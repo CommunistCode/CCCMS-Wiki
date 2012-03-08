@@ -1,6 +1,7 @@
 <?php
 
 	$memberTools = new memberTools();
+  $wikiTools = new wikiTools();
 
 	$wikiHistoryArray = $wikiTools->getHistory($_GET['wikiPageID'], $_POST['definitionID']);
 
