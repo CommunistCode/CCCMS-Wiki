@@ -25,8 +25,19 @@
       $result = $db->selectWhere("wikiCategoryID","wiki_pageCategories","wikiPageID=".$this->id."");
 
       foreach($result->fetch_assoc() as $row) {
+      
+        if (is_array($row))
+        {  
+    
+          $this->categoryArray[] = $row["wikiCategoryID"];
 
-        $this->categoryArray[] = $row['wikiCategoryID'];
+        }
+        else
+        {
+
+          $this->categoryArray[] = $row;
+
+        }
 
       }
 

@@ -1,6 +1,7 @@
 <?php
 
 	$wikiPageArray = $_wikiPage->getWikiPageArray();
+  $wikiTools = new wikiTools();
 
 	foreach ($wikiPageArray as $contentPiece) {
 
