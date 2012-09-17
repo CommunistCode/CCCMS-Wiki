@@ -8,7 +8,7 @@
 
     <option value='0'>Main Category</option>
 
-    <?php $wikiTools->renderCategorySelectOptions(); ?>
+    <?php $_wikiTools->renderCategorySelectOptions(); ?>
   
   </select>
   
@@ -21,7 +21,7 @@
   <label for="categoryID">Category Name:</label>
   <select name='categoryID'>
 
-    <?php $wikiTools->renderCategorySelectOptions(); ?>
+    <?php $_wikiTools->renderCategorySelectOptions(); ?>
 
   </select>
 

@@ -1,18 +1,11 @@
 <?php 
+  
+  require_once("includes/wikiAdminGlobal.inc.php");
 
-	require_once("../../config/config.php");
-	require_once($fullPath."/admin/includes/global.inc.php");
-	require_once($fullPath."/admin/includes/checkLogin.inc.php");
-	require_once("classes/wikiAdminTools.class.php");
-	require_once($fullPath."/wiki/classes/wikiTools.class.php");
+  $page->set("title","Manage Categories");
+  $page->set("heading","Manage Categories");
 
-	$wikiAdminTools = new wikiAdminTools();
-	$wikiTools = new wikiTools();
-  $pageTools = new pageTools();
-
-  $title = "Admin : Wiki : Manage Categories";
-  $heading = "Manage Categories";
-  $include = "includes/manageCategories.inc.php";
+  $page->addInclude("includes/manageCategories.inc.php", array("wikiTools"=>$wikiTools));
 
 	if (isset($_POST['addCategory'])) {
 
@@ -26,6 +19,6 @@
 
 	}
 
-  require_once($fullPath."/admin/themes/".$pageTools->getTheme("admin")."/templates/corePage.inc.php");
+  $page->render("corePage.inc.php");
 
 ?>

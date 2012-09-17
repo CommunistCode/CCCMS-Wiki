@@ -4,7 +4,7 @@
 
     <?php
   
-      $templateArray = $wikiAdminTools->getAllTemplates();
+      $templateArray = $_wikiTools->getAllTemplates();
 
       foreach($templateArray as $template) {
 

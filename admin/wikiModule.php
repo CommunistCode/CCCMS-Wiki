@@ -1,16 +1,11 @@
 <?php 
 
-	require_once("../../config/config.php");
-	require_once($fullPath . "/admin/includes/global.inc.php");
-	require_once($fullPath . "/admin/includes/checkLogin.inc.php");
+  require_once("includes/wikiAdminGlobal.inc.php");
 
-  $pageTools = new pageTools();
-
-  $title = "Admin : Wiki Module";
-  $heading = "Wiki Module";
-  $content = "Welcome to wiki module admin area";
-
-  require_once($fullPath."/admin/themes/".$pageTools->getTheme("admin")."/templates/corePage.inc.php");
+  $page->set("title","Wiki Management");
+  $page->set("heading","Wiki Management");
+  $page->addContent("Welcome to the wiki module admin area");
+  $page->render("corePage.inc.php");
 
 ?>
 

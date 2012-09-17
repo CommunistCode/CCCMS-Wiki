@@ -1,16 +1,11 @@
 <?php 
 
-	require_once("../../config/config.php");
-	require_once($fullPath."/admin/includes/global.inc.php");
-	require_once($fullPath."/admin/includes/checkLogin.inc.php");
-	require_once("classes/wikiAdminTools.class.php");
+  require_once("includes/wikiAdminGlobal.inc.php");
 
-	$wikiAdminTools = new wikiAdminTools();
-  $pageTools = new pageTools();
+  $page->set("title", "Create Template");
+  $page->set("heading", "Create Template");
 
-  $title = "Admin : Wiki : Create Template";
-  $heading = "Create Template";
-  $include = "includes/createTemplate.inc.php";
+  $page->addInclude("includes/createTemplate.inc.php");
 
 	if (isset($_POST['createTemplate'])) {
 
@@ -32,6 +27,6 @@
 
 	}
 
-  require_once($fullPath."/admin/themes/".$pageTools->getTheme("admin")."/templates/corePage.inc.php");
+  $page->render("corePage.inc.php");
 
 ?>
