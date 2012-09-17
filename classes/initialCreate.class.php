@@ -152,6 +152,7 @@
 			$adminDBTools->newContent("Wiki Module","wiki/admin/wikiModule.php","main");
 			$adminDBTools->newContent("Create Template","wiki/admin/createTemplate.php","Wiki Module");
 			$adminDBTools->newContent("Delete Template","wiki/admin/deleteTemplate.php","Wiki Module");
+			$adminDBTools->newContent("Manage Categories","wiki/admin/manageCategories.php","Wiki Module");
 
 			if ($db->checkExists("dContent","title","Wiki")) {
 
